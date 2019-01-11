@@ -15,5 +15,12 @@ public class MainServiceApplicationTests {
     public void contextLoads() {
     }
 
+    @Test
+    public void eqSolve() {
+        TestController.solve(1, 4, -5);
+        TestController.solve(4, 4, 1);
+        TestController.solve(1, 4, 5);
+    }
+
 }
 
