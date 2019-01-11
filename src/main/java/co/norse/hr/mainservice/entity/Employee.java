@@ -3,22 +3,36 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.Table;
 
 @Entity
+@Table(name = "employee")
 public class Employee {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
+    @Column(name = "company_id")
     private int companyId;
+    @Column(name = "first_name")
     private String firstName;
+    @Column(name = "last_name")
     private String lastName;
+    @Column(name = "birthday")
     private int birthday;
+    @Column(name = "email")
     private String email;
+    @Column(name = "phone")
     private String phone;
+    @Column(name = "room_number")
     private String roomNumber;
+    @Column(name = "position")
     private String position;
+    @Column(name = "description")
     private String description;
+    @Column(name = "office_id")
     private int officeId;
 
     @Override
