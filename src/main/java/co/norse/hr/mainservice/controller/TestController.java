@@ -20,4 +20,19 @@ public class TestController {
     public String hello3(@PathVariable String firstName) {
         return "Hello " + firstName;
     }
+
+    @GetMapping("equation")
+    public String solve(@RequestParam double a, @RequestParam double b, @RequestParam double c){
+        double D = b*b - 4*a*c;
+        if (D<0) {
+            return "no answer";
+        } else if (D==0) {
+            double x = (b - Math.sqrt(D))/(2*a);
+            return "answer: " + x;
+        } else {
+            double x1 = (b - Math.sqrt(D))/(2*a);
+            double x2 = (b + Math.sqrt(D))/(2*a);
+            return "answer: x1 = " + x1 + "x2 = " + x2;
+        }
+    }
 }
