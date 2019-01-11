@@ -11,7 +11,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
-    private int id;
+    private Long id;
     private int companyId;
     private String firstName;
     private String lastName;
@@ -40,7 +40,7 @@ public class Employee {
                 ']';
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
