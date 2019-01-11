@@ -21,24 +21,6 @@ public class Employee {
     private String description;
     private int officeId;
 
-
-    protected Employee() {}
-
-    public Employee(int id, int companyId, String firstName, String lastName, int birthday, String email,
-                    String phone, String roomNumber, String position, String description, int officeId) {
-        this.id = id;
-        this.companyId = companyId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.birthday = birthday;
-        this.email = email;
-        this.phone = phone;
-        this.roomNumber = roomNumber;
-        this.position = position;
-        this.description = description;
-        this.officeId = officeId;
-    }
-
     @Override
     public String toString() {
         return "Employee[" +
@@ -56,4 +38,87 @@ public class Employee {
                 ']';
     }
 
+    public int getId() {
+        return id;
+    }
+
+    public int getCompanyId() {
+        return companyId;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public int getBirthday() {
+        return birthday;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getRoomNumber() {
+        return roomNumber;
+    }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public int getOfficeId() {
+        return officeId;
+    }
+
+    public void setCompanyId(int companyId) {
+        this.companyId = companyId;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setBirthday(int birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public void setRoomNumber(String roomNumber) {
+        this.roomNumber = roomNumber;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setOfficeId(int officeId) {
+        this.officeId = officeId;
+    }
 }

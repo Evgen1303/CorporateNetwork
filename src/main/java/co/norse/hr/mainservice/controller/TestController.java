@@ -22,16 +22,16 @@ public class TestController {
     }
 
     @GetMapping("equation")
-    public String solve(@RequestParam double a, @RequestParam double b, @RequestParam double c){
+    public static String solve(@RequestParam double a, @RequestParam double b, @RequestParam double c){
         double D = b*b - 4*a*c;
         if (D<0) {
             return "no answer";
         } else if (D==0) {
-            double x = (b - Math.sqrt(D))/(2*a);
-            return "answer: " + x;
+            double x = -1 * b /(2*a);
+            return "answer: " + x + "<br>a = " + a + " b = " + b + " c = "+c;
         } else {
-            double x1 = (b - Math.sqrt(D))/(2*a);
-            double x2 = (b + Math.sqrt(D))/(2*a);
+            double x1 = (-1 * b - Math.sqrt(D))/(2*a);
+            double x2 = (-1 * b + Math.sqrt(D))/(2*a);
             return "answer: x1 = " + x1 + "x2 = " + x2;
         }
     }
