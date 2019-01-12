@@ -22,6 +22,10 @@ public class EmployeeController {
         return employeeControllerService.getEmployeeById(id);
     }
 
-    //@GetMapping("")
+    @PostMapping("/create")
+    public @ResponseBody String createEmployee (@RequestBody Employee employee) {
+        employeeControllerService.saveEmployee(employee);
+        return "201 CREATED\n\nlocation=#/employees/" + employee.getId();
+    }
 
 }

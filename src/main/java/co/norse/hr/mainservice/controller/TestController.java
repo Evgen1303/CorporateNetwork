@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 public class TestController {
 
     @Autowired
-    private static EmployeeControllerService employeeControllerService;
+    private EmployeeControllerService employeeControllerService;
     @Autowired
     private EmployeeRepository employeeRepository;
 
@@ -31,7 +31,7 @@ public class TestController {
     }
 
     @GetMapping("equation")
-    public static String solve(@RequestParam double a, @RequestParam double b, @RequestParam double c) {
+    public String solve(@RequestParam double a, @RequestParam double b, @RequestParam double c) {
         double D = b * b - 4 * a * c;
         if (D < 0) {
             return "no answer";
@@ -46,7 +46,7 @@ public class TestController {
     }
 
     @GetMapping("employee")
-    public static String newEmployee(@RequestParam String name, @RequestParam int companyId, @RequestParam String lastName,
+    public String newEmployee(@RequestParam String name, @RequestParam int companyId, @RequestParam String lastName,
                                      @RequestParam int birthday, @RequestParam String email, @RequestParam String phone,
                                      @RequestParam String room, @RequestParam String position, @RequestParam String info) {
         Employee employee = new Employee();
