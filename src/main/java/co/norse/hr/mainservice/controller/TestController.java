@@ -1,11 +1,19 @@
 package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.entity.Employee;
+import co.norse.hr.mainservice.service.EmployeeControllerService;
+import co.norse.hr.mainservice.service.EmployeeRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("test")
 public class TestController {
+
+    @Autowired
+    private static EmployeeControllerService employeeControllerService;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @GetMapping
     public String hello() {
@@ -38,9 +46,21 @@ public class TestController {
     }
 
     @GetMapping("employee")
-    public static String newEmployee(@RequestParam String name) {
+    public static String newEmployee(@RequestParam String name, @RequestParam int companyId, @RequestParam String lastName,
+                                     @RequestParam int birthday, @RequestParam String email, @RequestParam String phone,
+                                     @RequestParam String room, @RequestParam String position, @RequestParam String info) {
         Employee employee = new Employee();
         employee.setFirstName(name);
+        employee.setBirthday(birthday);
+        employee.setCompanyId(companyId);
+        employee.setDescription(info);
+        employee.setLastName(lastName);
+        employee.setEmail(email);
+        employee.setRoomNumber(room);
+        employee.setPhone(phone);
+        employee.setPosition(position);
+        employee.setOfficeId(1);
+        employeeControllerService.saveEmployee(employee);
         return employee.toString();
     }
 }

@@ -3,9 +3,11 @@ package co.norse.hr.mainservice.service;
 import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.expection.EmployeeNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class EmployeeControllerService {
     @Autowired
     private EmployeeRepository employeeRepository;
