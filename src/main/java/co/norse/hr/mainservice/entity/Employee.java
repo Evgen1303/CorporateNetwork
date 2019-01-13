@@ -1,4 +1,5 @@
 package co.norse.hr.mainservice.entity;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,7 +13,7 @@ public class Employee {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-    private int companyId;
+    private Company company;
     private String firstName;
     private String lastName;
     private int birthday;
@@ -21,13 +22,13 @@ public class Employee {
     private String roomNumber;
     private String position;
     private String description;
-    private int officeId;
+    private Office office;
 
     @Override
     public String toString() {
         return "Employee[" +
                 "id=" + id +
-                ", companyId=" + companyId +
+                ", companyId=" + company.toString() +
                 ", firstName='" + firstName + ", " +
                 ", lastName='" + lastName + ", " +
                 ", birthday=" + birthday +
@@ -36,7 +37,7 @@ public class Employee {
                 ", roomNumber='" + roomNumber + ", " +
                 ", position='" + position + ", " +
                 ", description='" + description + ", " +
-                ", officeId=" + officeId +
+                ", officeId=" + office.toString() +
                 ']';
     }
 
@@ -44,8 +45,8 @@ public class Employee {
         return id;
     }
 
-    public int getCompanyId() {
-        return companyId;
+    public Company getCompany() {
+        return company;
     }
 
     public String getFirstName() {
@@ -80,16 +81,16 @@ public class Employee {
         return description;
     }
 
-    public int getOfficeId() {
-        return officeId;
+    public Office getOffice() {
+        return office;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setCompanyId(int companyId) {
-        this.companyId = companyId;
+    public void setCompany(Company company) {
+        this.company = company;
     }
 
     public void setFirstName(String firstName) {
@@ -124,7 +125,7 @@ public class Employee {
         this.description = description;
     }
 
-    public void setOfficeId(int officeId) {
-        this.officeId = officeId;
+    public void setOffice(Office office) {
+        this.office = office;
     }
 }
