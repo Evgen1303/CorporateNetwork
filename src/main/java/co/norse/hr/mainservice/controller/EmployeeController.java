@@ -17,13 +17,13 @@ public class EmployeeController {
     private EmployeeControllerService employeeControllerService;
 
     @GetMapping
-    public ResponseEntity<Iterable<Employee>> getAllEmployees() {
-        return ResponseEntity.ok(employeeControllerService.getAllEmployees());
+    public Iterable<Employee> getAllEmployees() {
+        return employeeControllerService.getAllEmployees();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Employee> getEmployee(@PathVariable Long id) {
-        return ResponseEntity.ok(employeeControllerService.getEmployeeById(id));
+    public Employee getEmployee(@PathVariable Long id) {
+        return employeeControllerService.getEmployeeById(id);
     }
 
     @PostMapping("/create")
