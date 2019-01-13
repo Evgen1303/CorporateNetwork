@@ -3,7 +3,12 @@ package co.norse.hr.mainservice.controller;
 import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.service.EmployeeControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.net.URI;
+import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("employees")
@@ -13,25 +18,38 @@ public class EmployeeController {
     private EmployeeControllerService employeeControllerService;
 
     @GetMapping
-    public @ResponseBody String getAllEmployees() {
-        return "200 OK\n\n" + employeeControllerService.getAllEmployees();
+    public @ResponseBody ResponseEntity<Iterable<Employee>> getAllEmployees() {
+        return ResponseEntity.ok(employeeControllerService.getAllEmployees());
     }
 
     @GetMapping("/{id}")
-    public @ResponseBody String getEmployee(@PathVariable Long id) {
-        return "200 OK\n\n" + employeeControllerService.getEmployeeById(id);
+    public @ResponseBody ResponseEntity<Employee> getEmployee(@PathVariable Long id) {
+        return ResponseEntity.ok(employeeControllerService.getEmployeeById(id));
     }
 
     @PostMapping("/create")
-    public @ResponseBody String createEmployee (@RequestBody Employee employee) {
+    public @ResponseBody ResponseEntity<Employee> createEmployee (@RequestBody Employee employee) {
         employeeControllerService.saveEmployee(employee);
-        return "201 CREATED\n\nlocation=#/employees/" + employee.getId();
+        try {
+            URI location = new URI("#/employees/" + employee.getId());
+            return ResponseEntity.created(location).build();
+        } catch(URISyntaxException e) {
+            e.printStackTrace();
+        }
+        return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/delete/{id}")
-    public @ResponseBody String deleteEmployee (@RequestBody Long id) {
+    @DeleteMapping("/{id}/delete")
+    public @ResponseBody
+    ResponseEntity deleteEmployee (@RequestBody Long id) {
         employeeControllerService.deleteEmployeeById(id);
-        return "200 OK";
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}/put")
+    public @ResponseBody ResponseEntity<Employee> updateEmployeePut (@RequestBody Employee employee) {
+        employeeControllerService.updateEmployee(employee);
+        return ResponseEntity.ok(employee);
     }
 
 }

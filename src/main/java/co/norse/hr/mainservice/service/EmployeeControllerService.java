@@ -43,4 +43,8 @@ public class EmployeeControllerService {
     public void deleteAllEmployees() {
         employeeRepository.deleteAll();
     }
+
+    public void updateEmployee(Employee newEmployee) {
+        employeeRepository.save(newEmployee);
+    }
 }
