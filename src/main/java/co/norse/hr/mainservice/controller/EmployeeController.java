@@ -26,7 +26,7 @@ public class EmployeeController {
         return employeeControllerService.getEmployeeById(id);
     }
 
-    @PostMapping("/create")
+    @PostMapping
     public ResponseEntity<Employee> createEmployee (@RequestBody Employee employee) {
         employeeControllerService.saveEmployee(employee);
         try {
