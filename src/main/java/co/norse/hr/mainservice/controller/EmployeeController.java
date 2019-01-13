@@ -6,9 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 @RestController
 @RequestMapping("employees")
 public final class EmployeeController {
@@ -31,15 +28,9 @@ public final class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<Employee> createEmployee (@RequestBody Employee employee) {
+    public Employee createEmployee (@RequestBody Employee employee) {
         employeeControllerService.saveEmployee(employee);
-        try {
-            URI location = new URI("#/employees/" + employee.getId());
-            return ResponseEntity.created(location).build();
-        } catch(URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return ResponseEntity.notFound().build();
+        return employee;
     }
 
     @DeleteMapping("/{id}")
