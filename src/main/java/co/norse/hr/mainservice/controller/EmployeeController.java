@@ -17,17 +17,17 @@ public class EmployeeController {
     private EmployeeControllerService employeeControllerService;
 
     @GetMapping
-    public @ResponseBody ResponseEntity<Iterable<Employee>> getAllEmployees() {
+    public ResponseEntity<Iterable<Employee>> getAllEmployees() {
         return ResponseEntity.ok(employeeControllerService.getAllEmployees());
     }
 
     @GetMapping("/{id}")
-    public @ResponseBody ResponseEntity<Employee> getEmployee(@PathVariable Long id) {
+    public ResponseEntity<Employee> getEmployee(@PathVariable Long id) {
         return ResponseEntity.ok(employeeControllerService.getEmployeeById(id));
     }
 
     @PostMapping("/create")
-    public @ResponseBody ResponseEntity<Employee> createEmployee (@RequestBody Employee employee) {
+    public ResponseEntity<Employee> createEmployee (@RequestBody Employee employee) {
         employeeControllerService.saveEmployee(employee);
         try {
             URI location = new URI("#/employees/" + employee.getId());
@@ -39,8 +39,7 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{id}")
-    public @ResponseBody
-    ResponseEntity deleteEmployee (@PathVariable Long id) {
+    public ResponseEntity deleteEmployee (@PathVariable Long id) {
         employeeControllerService.deleteEmployeeById(id);
         return ResponseEntity.noContent().build();
     }
@@ -48,7 +47,7 @@ public class EmployeeController {
 
     //TODO
     @PutMapping("/{id}")
-    public @ResponseBody ResponseEntity<Employee> updateEmployeePut (@RequestParam Long id,
+    public ResponseEntity<Employee> updateEmployeePut (@RequestParam Long id,
                                                                      @RequestBody Employee employee) {
         employee.setId(id);
         employeeControllerService.updateEmployee(employee);
