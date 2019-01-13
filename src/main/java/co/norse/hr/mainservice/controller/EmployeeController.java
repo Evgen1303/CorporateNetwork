@@ -13,19 +13,25 @@ public class EmployeeController {
     private EmployeeControllerService employeeControllerService;
 
     @GetMapping
-    public Iterable<Employee> getAllEmployees() {
-        return employeeControllerService.getAllEmployees();
+    public @ResponseBody String getAllEmployees() {
+        return "200 OK\n\n" + employeeControllerService.getAllEmployees();
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployee(@PathVariable Long id) {
-        return employeeControllerService.getEmployeeById(id);
+    public @ResponseBody String getEmployee(@PathVariable Long id) {
+        return "200 OK\n\n" + employeeControllerService.getEmployeeById(id);
     }
 
     @PostMapping("/create")
     public @ResponseBody String createEmployee (@RequestBody Employee employee) {
         employeeControllerService.saveEmployee(employee);
         return "201 CREATED\n\nlocation=#/employees/" + employee.getId();
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public @ResponseBody String deleteEmployee (@RequestBody Long id) {
+        employeeControllerService.deleteEmployeeById(id);
+        return "200 OK";
     }
 
 }
