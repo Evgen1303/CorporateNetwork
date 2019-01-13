@@ -39,17 +39,23 @@ public class EmployeeController {
         return ResponseEntity.notFound().build();
     }
 
-    @DeleteMapping("/{id}/delete")
+    @DeleteMapping("/{id}")
     public @ResponseBody
-    ResponseEntity deleteEmployee (@RequestBody Long id) {
+    ResponseEntity deleteEmployee (@PathVariable Long id) {
         employeeControllerService.deleteEmployeeById(id);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("/{id}/put")
-    public @ResponseBody ResponseEntity<Employee> updateEmployeePut (@RequestBody Employee employee) {
+
+    //TODO
+    @PutMapping("/{id}")
+    public @ResponseBody ResponseEntity<Employee> updateEmployeePut (@RequestParam Long id,
+                                                                     @RequestBody Employee employee) {
+        employee.setId(id);
         employeeControllerService.updateEmployee(employee);
         return ResponseEntity.ok(employee);
     }
+
+    //TODO: PATCH
 
 }

@@ -84,6 +84,10 @@ public class Employee {
         return officeId;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public void setCompanyId(int companyId) {
         this.companyId = companyId;
     }
