@@ -52,14 +52,12 @@ public class TestController {
         Employee employee = new Employee();
         employee.setFirstName(name);
         employee.setBirthday(birthday);
-        employee.setCompanyId(companyId);
         employee.setDescription(info);
         employee.setLastName(lastName);
         employee.setEmail(email);
         employee.setRoomNumber(room);
         employee.setPhone(phone);
         employee.setPosition(position);
-        employee.setOfficeId(1);
         employeeControllerService.saveEmployee(employee);
         return employee.toString();
     }

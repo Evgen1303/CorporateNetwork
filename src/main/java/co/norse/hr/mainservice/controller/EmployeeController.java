@@ -11,10 +11,14 @@ import java.net.URISyntaxException;
 
 @RestController
 @RequestMapping("employees")
-public class EmployeeController {
+public final class EmployeeController {
+
+    private EmployeeControllerService employeeControllerService;
 
     @Autowired
-    private EmployeeControllerService employeeControllerService;
+    public EmployeeController(EmployeeControllerService employeeControllerService) {
+        this.employeeControllerService = employeeControllerService;
+    }
 
     @GetMapping
     public Iterable<Employee> getAllEmployees() {

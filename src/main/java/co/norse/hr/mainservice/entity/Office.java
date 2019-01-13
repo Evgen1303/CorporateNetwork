@@ -1,10 +1,8 @@
 package co.norse.hr.mainservice.entity;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
+@Entity
 public class Office {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
