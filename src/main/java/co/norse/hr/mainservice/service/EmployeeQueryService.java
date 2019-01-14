@@ -2,6 +2,7 @@ package co.norse.hr.mainservice.service;
 
 import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.expection.EmployeeNotFoundException;
+import co.norse.hr.mainservice.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +19,7 @@ public class EmployeeQueryService {
 
     public Employee getEmployeeById(Long id) {
         Optional<Employee> result = employeeRepository.findById(id);
-        if (!result.isPresent()) {
-            throw new EmployeeNotFoundException();
-        }
+        result.orElseThrow(EmployeeNotFoundException::new);
         return result.get();
     }
 
