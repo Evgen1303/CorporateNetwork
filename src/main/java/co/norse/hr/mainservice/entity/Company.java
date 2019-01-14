@@ -5,7 +5,6 @@ import javax.persistence.*;
 @Entity
 public class Company {
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
-    @Column(name = "id")
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 }

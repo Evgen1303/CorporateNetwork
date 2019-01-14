@@ -11,7 +11,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-    private Company company;
+//    private Company company;
     private String firstName;
     private String lastName;
     private int birthday;
@@ -20,13 +20,13 @@ public class Employee {
     private String roomNumber;
     private String position;
     private String description;
-    private Office office;
+//    private Office office;
 
     @Override
     public String toString() {
         return "Employee[" +
                 "id=" + id +
-                ", companyId=" + company.toString() +
+//                ", companyId=" + company.toString() +
                 ", firstName='" + firstName + ", " +
                 ", lastName='" + lastName + ", " +
                 ", birthday=" + birthday +
@@ -35,7 +35,7 @@ public class Employee {
                 ", roomNumber='" + roomNumber + ", " +
                 ", position='" + position + ", " +
                 ", description='" + description + ", " +
-                ", officeId=" + office.toString() +
+//                ", officeId=" + office.toString() +
                 ']';
     }
 
@@ -43,9 +43,9 @@ public class Employee {
         return id;
     }
 
-    public Company getCompany() {
-        return company;
-    }
+//    public Company getCompany() {
+//        return company;
+//    }
 
     public String getFirstName() {
         return firstName;
@@ -79,17 +79,17 @@ public class Employee {
         return description;
     }
 
-    public Office getOffice() {
-        return office;
-    }
+//    public Office getOffice() {
+//        return office;
+//    }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
-    }
+//    public void setCompany(Company company) {
+//        this.company = company;
+//    }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -123,7 +123,7 @@ public class Employee {
         this.description = description;
     }
 
-    public void setOffice(Office office) {
-        this.office = office;
-    }
+//    public void setOffice(Office office) {
+//        this.office = office;
+//    }
 }
