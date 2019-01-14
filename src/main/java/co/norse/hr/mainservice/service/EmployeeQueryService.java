@@ -44,7 +44,7 @@ public class EmployeeQueryService {
         employeeRepository.deleteAll();
     }
 
-    public void updateEmployee(Employee Employee) {
-        employeeRepository.save(Employee);
+    public void updateEmployee(Employee employee) {
+        employeeRepository.save(employee);
     }
 }
