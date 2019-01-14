@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class EmployeeControllerService {
+public class EmployeeQueryService {
     @Autowired
     private EmployeeRepository employeeRepository;
 

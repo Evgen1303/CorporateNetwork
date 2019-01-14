@@ -1,7 +1,7 @@
 package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.entity.Employee;
-import co.norse.hr.mainservice.service.EmployeeControllerService;
+import co.norse.hr.mainservice.service.EmployeeQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,32 +10,32 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("employees")
 public final class EmployeeController {
 
-    private EmployeeControllerService employeeControllerService;
+    private EmployeeQueryService employeeQueryService;
 
     @Autowired
-    public EmployeeController(EmployeeControllerService employeeControllerService) {
-        this.employeeControllerService = employeeControllerService;
+    public EmployeeController(EmployeeQueryService employeeQueryService) {
+        this.employeeQueryService = employeeQueryService;
     }
 
     @GetMapping
     public Iterable<Employee> getAllEmployees() {
-        return employeeControllerService.getAllEmployees();
+        return employeeQueryService.getAllEmployees();
     }
 
     @GetMapping("/{id}")
     public Employee getEmployee(@PathVariable Long id) {
-        return employeeControllerService.getEmployeeById(id);
+        return employeeQueryService.getEmployeeById(id);
     }
 
     @PostMapping
     public Employee createEmployee (@RequestBody Employee employee) {
-        employeeControllerService.saveEmployee(employee);
+        employeeQueryService.saveEmployee(employee);
         return employee;
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteEmployee (@PathVariable Long id) {
-        employeeControllerService.deleteEmployeeById(id);
+        employeeQueryService.deleteEmployeeById(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -45,7 +45,7 @@ public final class EmployeeController {
     public ResponseEntity<Employee> updateEmployeePut (@RequestParam Long id,
                                                                      @RequestBody Employee employee) {
         employee.setId(id);
-        employeeControllerService.updateEmployee(employee);
+        employeeQueryService.updateEmployee(employee);
         return ResponseEntity.ok(employee);
     }
 
