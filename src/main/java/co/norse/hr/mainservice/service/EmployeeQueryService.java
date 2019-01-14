@@ -19,8 +19,7 @@ public class EmployeeQueryService {
 
     public Employee getEmployeeById(Long id) {
         Optional<Employee> result = employeeRepository.findById(id);
-        result.orElseThrow(EmployeeNotFoundException::new);
-        return result.get();
+        return result.orElseThrow(EmployeeNotFoundException::new);
     }
 
     public void saveEmployee(Employee employee) {
