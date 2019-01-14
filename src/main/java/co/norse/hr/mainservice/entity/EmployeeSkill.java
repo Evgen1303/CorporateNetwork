@@ -1,4 +1,4 @@
-package co.norse.hr.mainservice.entity.skill;
+package co.norse.hr.mainservice.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,16 +9,13 @@ import javax.persistence.Id;
 public class EmployeeSkill {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private int employeeId;
     private int projectId;
     private int level;
 
-    public EmployeeSkill() {
-    }
-
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
