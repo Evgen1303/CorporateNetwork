@@ -1,5 +1,6 @@
 package co.norse.hr.mainservice.controller;
 
+import co.norse.hr.mainservice.entity.EmployeeSkill;
 import co.norse.hr.mainservice.entity.Skill;
 import co.norse.hr.mainservice.service.SkillQueryService;
 import javassist.NotFoundException;
@@ -21,6 +22,16 @@ public class SkillController {
     @GetMapping
     public Iterable<Skill> getAllSkills() throws NotFoundException {
         return skillQueryService.getAllSkills();
+    }
+
+    @GetMapping("employee")
+    public Iterable<Skill> getAllEmployeeSkills() throws NotFoundException {
+        return skillQueryService.getAllSkills();
+    }
+
+    @GetMapping("em/{id}")
+    public EmployeeSkill getEmployeeSkills(@PathVariable Long id) throws NotFoundException {
+        return skillQueryService.getEmployeeSkillById(id);
     }
 
     @GetMapping("/{id}")

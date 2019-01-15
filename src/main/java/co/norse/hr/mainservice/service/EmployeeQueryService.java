@@ -1,7 +1,8 @@
 package co.norse.hr.mainservice.service;
 
 import co.norse.hr.mainservice.entity.Employee;
-import co.norse.hr.mainservice.expection.EmployeeNotFoundException;
+import co.norse.hr.mainservice.exception.EmployeeNotFoundException;
+import co.norse.hr.mainservice.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

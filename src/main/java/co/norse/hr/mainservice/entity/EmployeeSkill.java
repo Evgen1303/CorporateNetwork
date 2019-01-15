@@ -1,9 +1,10 @@
 package co.norse.hr.mainservice.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class EmployeeSkill {
@@ -11,28 +12,38 @@ public class EmployeeSkill {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private int employeeId;
-    private int projectId;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Employee employeeId;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "skill_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Skill skillId;
+
+    @NotNull
     private int level;
 
     public Long getId() {
         return id;
     }
 
-    public int getEmployeeId() {
+    public Employee getEmployeeId() {
         return employeeId;
     }
 
-    public void setEmployeeId(int employeeId) {
+    public void setEmployeeId(Employee employeeId) {
         this.employeeId = employeeId;
     }
 
-    public int getProjectId() {
-        return projectId;
+    public Skill getSkillId() {
+        return skillId;
     }
 
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
+    public void setSkillId(Skill skillId) {
+        this.skillId = skillId;
     }
 
     public int getLevel() {
@@ -48,7 +59,7 @@ public class EmployeeSkill {
         return "EmployeeSkill{" +
                 "id=" + id +
                 ", employeeId=" + employeeId +
-                ", projectId=" + projectId +
+                ", skillId=" + skillId +
                 ", level=" + level +
                 '}';
     }

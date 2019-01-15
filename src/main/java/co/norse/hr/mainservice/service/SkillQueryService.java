@@ -1,6 +1,8 @@
 package co.norse.hr.mainservice.service;
 
+import co.norse.hr.mainservice.entity.EmployeeSkill;
 import co.norse.hr.mainservice.entity.Skill;
+import co.norse.hr.mainservice.repositories.EmployeeSkillRepository;
 import co.norse.hr.mainservice.repositories.SkillRepository;
 import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,10 +14,12 @@ import java.util.Optional;
 public class SkillQueryService {
 
     private SkillRepository skillRepository;
+    private EmployeeSkillRepository employeeSkillRepository;
 
     @Autowired
-    public SkillQueryService(SkillRepository skillRepository) {
+    public SkillQueryService(SkillRepository skillRepository, EmployeeSkillRepository employeeSkillRepository) {
         this.skillRepository = skillRepository;
+        this.employeeSkillRepository = employeeSkillRepository;
     }
 
     public Skill getSkillById(Long id) throws NotFoundException {
@@ -28,6 +32,16 @@ public class SkillQueryService {
         return skill.get();
     }
 
+    public EmployeeSkill getEmployeeSkillById(Long id) throws NotFoundException {
+
+        Optional<EmployeeSkill> employeeSkill = employeeSkillRepository.findById(id);
+
+        if (!employeeSkill.isPresent()) {
+            throw new NotFoundException("EmployeeSkill not found");
+        }
+        return employeeSkill.get();
+    }
+
     public Iterable<Skill> getAllSkills() throws NotFoundException {
 
         Iterable<Skill> skills = skillRepository.findAll();
@@ -36,6 +50,15 @@ public class SkillQueryService {
             throw new NotFoundException("Skill not found");
         }
         return skills;
+    }
+    public Iterable<EmployeeSkill> getAllEmployeeSkills() throws NotFoundException {
+
+        Iterable<EmployeeSkill> employeeSkills = employeeSkillRepository.findAll();
+
+        if (!employeeSkills.iterator().hasNext()) {
+            throw new NotFoundException("Skill not found");
+        }
+        return employeeSkills;
     }
 
     public void saveSkill(Skill skill) {
