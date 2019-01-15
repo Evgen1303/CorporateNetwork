@@ -2,9 +2,10 @@ package co.norse.hr.mainservice.service;
 
 import co.norse.hr.mainservice.entity.EmployeeSkill;
 import co.norse.hr.mainservice.entity.Skill;
+import co.norse.hr.mainservice.exception.ResourceNotFoundException;
+import co.norse.hr.mainservice.repositories.EmployeeRepository;
 import co.norse.hr.mainservice.repositories.EmployeeSkillRepository;
 import co.norse.hr.mainservice.repositories.SkillRepository;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,48 +16,52 @@ public class SkillQueryService {
 
     private SkillRepository skillRepository;
     private EmployeeSkillRepository employeeSkillRepository;
+    private EmployeeRepository employeeRepository;
 
     @Autowired
-    public SkillQueryService(SkillRepository skillRepository, EmployeeSkillRepository employeeSkillRepository) {
+    public SkillQueryService(SkillRepository skillRepository, EmployeeRepository employeeRepository,
+                             EmployeeSkillRepository employeeSkillRepository) {
         this.skillRepository = skillRepository;
         this.employeeSkillRepository = employeeSkillRepository;
+        this.employeeRepository = employeeRepository;
     }
 
-    public Skill getSkillById(Long id) throws NotFoundException {
+    public Skill getSkillById(Long id) {
 
         Optional<Skill> skill = skillRepository.findById(id);
 
         if (!skill.isPresent()) {
-            throw new NotFoundException("Skill not found");
+            throw new ResourceNotFoundException();
         }
         return skill.get();
     }
 
-    public EmployeeSkill getEmployeeSkillById(Long id) throws NotFoundException {
+    public EmployeeSkill getEmployeeSkillById(Long id) {
 
         Optional<EmployeeSkill> employeeSkill = employeeSkillRepository.findById(id);
 
         if (!employeeSkill.isPresent()) {
-            throw new NotFoundException("EmployeeSkill not found");
+            throw new ResourceNotFoundException();
         }
         return employeeSkill.get();
     }
 
-    public Iterable<Skill> getAllSkills() throws NotFoundException {
+    public Iterable<Skill> getAllSkills() {
 
         Iterable<Skill> skills = skillRepository.findAll();
 
         if (!skills.iterator().hasNext()) {
-            throw new NotFoundException("Skill not found");
+            throw new ResourceNotFoundException();
         }
         return skills;
     }
-    public Iterable<EmployeeSkill> getAllEmployeeSkills() throws NotFoundException {
+
+    public Iterable<EmployeeSkill> getAllEmployeeSkills() {
 
         Iterable<EmployeeSkill> employeeSkills = employeeSkillRepository.findAll();
 
         if (!employeeSkills.iterator().hasNext()) {
-            throw new NotFoundException("Skill not found");
+            throw new ResourceNotFoundException();
         }
         return employeeSkills;
     }

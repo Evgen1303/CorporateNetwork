@@ -3,13 +3,12 @@ package co.norse.hr.mainservice.controller;
 import co.norse.hr.mainservice.entity.EmployeeSkill;
 import co.norse.hr.mainservice.entity.Skill;
 import co.norse.hr.mainservice.service.SkillQueryService;
-import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("skills")
+@RequestMapping("employee_skills")
 public class SkillController {
 
     private SkillQueryService skillQueryService;
@@ -20,22 +19,22 @@ public class SkillController {
     }
 
     @GetMapping
-    public Iterable<Skill> getAllSkills() throws NotFoundException {
+    public Iterable<EmployeeSkill> getAllEmployeeSkills() {
+        return skillQueryService.getAllEmployeeSkills();
+    }
+
+    @GetMapping("skill_list")
+    public Iterable<Skill> getAllSkills() {
         return skillQueryService.getAllSkills();
     }
 
-    @GetMapping("employee")
-    public Iterable<Skill> getAllEmployeeSkills() throws NotFoundException {
-        return skillQueryService.getAllSkills();
+    @GetMapping("e/{employeeId}")
+    public EmployeeSkill getEmployeeSkills(@PathVariable Long employeeId) {
+        return skillQueryService.getEmployeeSkillById(employeeId);
     }
 
-    @GetMapping("em/{id}")
-    public EmployeeSkill getEmployeeSkills(@PathVariable Long id) throws NotFoundException {
-        return skillQueryService.getEmployeeSkillById(id);
-    }
-
-    @GetMapping("/{id}")
-    public Skill getSkill(@PathVariable Long id) throws NotFoundException {
+    @GetMapping("s/{id}")
+    public Skill getSkill(@PathVariable Long id) {
         return skillQueryService.getSkillById(id);
     }
 
@@ -52,7 +51,7 @@ public class SkillController {
     }
 
     @PutMapping
-    public ResponseEntity<Skill> updateSkillPut (@RequestBody Skill skill){
+    public ResponseEntity<Skill> updateSkillPut(@RequestBody Skill skill) {
         skillQueryService.updateSkill(skill);
         return ResponseEntity.ok(skill);
     }
