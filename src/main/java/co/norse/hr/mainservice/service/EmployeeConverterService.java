@@ -6,10 +6,14 @@ import co.norse.hr.mainservice.entity.Employee;
 public class EmployeeConverterService {
 
     /*
+    private CompanyQueryService companyQueryService;
+    private OfficeQueryService officeQueryService;
+
     @Autowired
-    private CompanyQueryService companyQueryService = new CompanyQueryService();
-    @Autowired
-    private OfficeQueryService officeQueryService = new OfficeQueryService();
+    EmployeeConverterService(CompanyQueryService companyQueryService, OfficeQueryService officeQueryService) {
+        this.companyQueryService = companyQueryService;
+        this.officeQueryService = officeQueryService;
+    }
     */
 
 

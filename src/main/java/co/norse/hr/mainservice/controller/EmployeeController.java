@@ -2,6 +2,7 @@ package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.EmployeeDto;
 import co.norse.hr.mainservice.entity.Employee;
+import co.norse.hr.mainservice.service.EmployeeConverterService;
 import co.norse.hr.mainservice.service.EmployeeQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -12,10 +13,12 @@ import org.springframework.web.bind.annotation.*;
 public final class EmployeeController {
 
     private EmployeeQueryService employeeQueryService;
+    private EmployeeConverterService employeeConverterService;
 
     @Autowired
-    public EmployeeController(EmployeeQueryService employeeQueryService) {
+    public EmployeeController(EmployeeQueryService employeeQueryService, EmployeeConverterService employeeConverterService) {
         this.employeeQueryService = employeeQueryService;
+        this.employeeConverterService = employeeConverterService;
     }
 
     //TODO: DTO
@@ -25,34 +28,35 @@ public final class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public EmployeeDto getEmployee(@PathVariable Long id) {
-        return employeeQueryService.getEmployeeById(id).convertToDto();
+    public Employee getEmployee(@PathVariable Long id) {
+        return employeeQueryService.getEmployeeById(id);
     }
 
     @PostMapping
-    public EmployeeDto createEmployee (@RequestBody EmployeeDto employeeDto) {
-        employeeQueryService.saveEmployee(employeeDto.convertToEntity());
-        return employeeDto;
+    public Employee createEmployee(@RequestBody EmployeeDto employeeDto) {
+        Employee employee = employeeConverterService.convertToEntity(employeeDto);
+        employeeQueryService.saveEmployee(employee);
+        return employee;
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity deleteEmployee (@PathVariable Long id) {
+    public ResponseEntity deleteEmployee(@PathVariable Long id) {
         employeeQueryService.deleteEmployeeById(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<EmployeeDto> putEmployee (@PathVariable Long id,
-                                                                     @RequestBody EmployeeDto employeeDto) {
-        Employee employee = employeeDto.convertToEntity();
+    public ResponseEntity<Employee> putEmployee(@PathVariable Long id,
+                                                @RequestBody EmployeeDto employeeDto) {
+        Employee employee = employeeConverterService.convertToEntity(employeeDto);
         employeeQueryService.updateEmployee(employee);
-        return ResponseEntity.ok(employee.convertToDto());
+        return ResponseEntity.ok(employee);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<EmployeeDto> patchEmployee (@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<Employee> patchEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
         employeeQueryService.patchEmployee(employeeDto, id);
-        return ResponseEntity.ok(employeeDto);
+        return ResponseEntity.ok(employeeConverterService.convertToEntity(employeeDto));
     }
 
 }
