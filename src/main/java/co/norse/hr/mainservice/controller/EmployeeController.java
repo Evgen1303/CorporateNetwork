@@ -24,14 +24,14 @@ public final class EmployeeController {
     }
 
     @GetMapping("/{id}")
-    public Employee getEmployee(@PathVariable Long id) {
-        return employeeQueryService.getEmployeeById(id);
+    public EmployeeDTO getEmployee(@PathVariable Long id) {
+        return employeeQueryService.getEmployeeById(id).convertToDto();
     }
 
     @PostMapping
-    public Employee createEmployee (@RequestBody Employee employee) {
+    public EmployeeDTO createEmployee (@RequestBody Employee employee) {
         employeeQueryService.saveEmployee(employee);
-        return employee;
+        return employee.convertToDto();
     }
 
     @DeleteMapping("/{id}")
@@ -44,7 +44,8 @@ public final class EmployeeController {
     //TODO
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployeePut (@RequestParam Long id,
-                                                                     @RequestBody EmployeeDTO employee) {
+                                                                     @RequestBody EmployeeDTO employeeDTO) {
+        Employee employee = employeeDTO.convertToEntity();
         employeeQueryService.updateEmployee(employee);
         return ResponseEntity.ok(employee);
     }
