@@ -12,10 +12,10 @@ public class Employee {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "company_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
+
     private String firstName;
     private String lastName;
     private int birthday;
@@ -25,9 +25,8 @@ public class Employee {
     private String position;
     private String description;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "office_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
     private Office office;
 
     @Override
