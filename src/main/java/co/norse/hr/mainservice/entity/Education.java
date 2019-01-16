@@ -1,18 +1,21 @@
 package co.norse.hr.mainservice.entity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity
 public class Education {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    //@Column(name = "id")
     private Long id;
     private String name;
     private String description;
     private int start;
     private int end;
-    private Employee employee_id;
+    private Employee employeeId;
 
     @Override
     public String toString() {
@@ -22,7 +25,7 @@ public class Education {
                 ", description='" + description + ", " +
                 ", start='" + start + ", " +
                 ", end=" + end +
-                ", employee_id='" + employee_id + ", " +
+                ", employee_id='" + employeeId + ", " +
                 ']';
     }
 
@@ -47,7 +50,7 @@ public class Education {
     }
 
     public Employee getEmployeeId() {
-        return employee_id;
+        return employeeId;
     }
 
 
@@ -71,7 +74,7 @@ public class Education {
         this.end = end;
     }
 
-    public void setEmployeeId(Employee employee_id) {
-        this.employee_id = employee_id;
+    public void setEmployeeId(Employee employeeId) {
+        this.employeeId = employeeId;
     }
 }
