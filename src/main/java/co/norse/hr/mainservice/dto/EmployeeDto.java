@@ -1,10 +1,5 @@
 package co.norse.hr.mainservice.dto;
 
-import co.norse.hr.mainservice.entity.Company;
-import co.norse.hr.mainservice.entity.Employee;
-import co.norse.hr.mainservice.entity.Office;
-import org.springframework.beans.factory.annotation.Autowired;
-
 public class EmployeeDto {
     private Long companyId;
     private String firstName;
@@ -16,11 +11,6 @@ public class EmployeeDto {
     private String position;
     private String description;
     private Long officeId;
-
-    @Autowired
-    private CompanyQueryService companyQueryService = new CompanyQueryService();
-    @Autowired
-    private OfficeQueryService officeQueryService = new OfficeQueryService();
 
     @Override
     public String toString() {
@@ -36,19 +26,6 @@ public class EmployeeDto {
                 ", description='" + description + ", " +
                 ", officeId=" + officeId.toString() +
                 ']';
-    }
-
-    public Employee convertToEntity() {
-        Employee employee = new Employee();
-        employee.setBirthday(this.birthday);
-        employee.setCompany(companyQueryService.getCompanyById(this.companyId));
-        employee.setDescription(this.description);
-        employee.setEmail(this.email);
-        employee.setFirstName(this.firstName);
-        employee.setLastName(this.lastName);
-        employee.setOffice(officeQueryService.getOfficeById(this.officeId));
-        employee.setPosition(this.position);
-        employee.setRoomNumber(this.roomNumber);
     }
 
     public Long getCompanyId() {
