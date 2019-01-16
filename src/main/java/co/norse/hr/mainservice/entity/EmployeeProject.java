@@ -5,11 +5,18 @@ import javax.persistence.*;
 @Entity
 public class EmployeeProject {
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
-    private  int employee_id;
-    private  int project_id;
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_ld", nullable = false)
+    private Employee employee;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "project_ld", nullable = false)
+    private Project project;
+
     private  String position;
     private int start;
     private int end;
@@ -20,24 +27,24 @@ public class EmployeeProject {
     public String toString(){
         return "Project[" +
                 "id=" + id +
-                ", employee_id=" + employee_id +
-                ", project_id=" + project_id  +
+                ", employeeId=" + employee +
+                ", projectId=" + project +
                 ", position=" + position  +
                 ", start=" + start  +
                 ", end=" + end  +
                 ']';
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public int getEmployee_id() {
-        return employee_id;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public int getProject_id() {
-        return project_id;
+    public Project getProject() {
+        return project;
     }
 
     public String getPosition() {
@@ -52,16 +59,16 @@ public class EmployeeProject {
         return end;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public void setEmployee_id(int employee_id) {
-        this.employee_id = employee_id;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public void setProject_id(int project_id) {
-        this.project_id = project_id;
+    public void setProject(Project project) {
+        this.project = project;
     }
 
     public void setPosition(String position) {
