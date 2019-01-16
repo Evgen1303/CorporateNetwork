@@ -35,6 +35,7 @@ public class Project {
         return name;
     }
 
+
     public String getDescription() {
         return description;
     }
