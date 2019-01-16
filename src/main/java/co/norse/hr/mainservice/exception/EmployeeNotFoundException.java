@@ -1,4 +1,4 @@
-package co.norse.hr.mainservice.expection;
+package co.norse.hr.mainservice.exception;
 
 import javax.persistence.EntityNotFoundException;
 
