@@ -1,5 +1,7 @@
 package co.norse.hr.mainservice.entity;
 
+import co.norse.hr.mainservice.dto.EmployeeDTO;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -37,6 +39,20 @@ public class Employee {
                 ", description='" + description + ", " +
                 ", officeId=" + office.toString() +
                 ']';
+    }
+
+    public EmployeeDTO convertToDto() {
+        EmployeeDTO dto = new EmployeeDTO();
+        dto.setBirthday(this.birthday);
+        dto.setCompanyId(this.company.getId());
+        dto.setDescription(this.description);
+        dto.setEmail(this.email);
+        dto.setFirstName(this.firstName);
+        dto.setLastName(this.lastName);
+        dto.setOfficeId(this.office.getId());
+        dto.setPosition(this.position);
+        dto.setRoomNumber(this.roomNumber);
+        return dto;
     }
 
     public Long getId() {

@@ -4,7 +4,7 @@ import co.norse.hr.mainservice.entity.Company;
 import co.norse.hr.mainservice.entity.Office;
 
 public class EmployeeDTO {
-    private Company company;
+    private Long companyId;
     private String firstName;
     private String lastName;
     private int birthday;
@@ -13,12 +13,12 @@ public class EmployeeDTO {
     private String roomNumber;
     private String position;
     private String description;
-    private Office office;
+    private Long officeId;
 
     @Override
     public String toString() {
         return "Employee[" +
-                ", companyId=" + company.toString() +
+                ", companyId=" + companyId.toString() +
                 ", firstName='" + firstName + ", " +
                 ", lastName='" + lastName + ", " +
                 ", birthday=" + birthday +
@@ -27,12 +27,12 @@ public class EmployeeDTO {
                 ", roomNumber='" + roomNumber + ", " +
                 ", position='" + position + ", " +
                 ", description='" + description + ", " +
-                ", officeId=" + office.toString() +
+                ", officeId=" + officeId.toString() +
                 ']';
     }
 
-    public Company getCompany() {
-        return company;
+    public Long getCompanyId() {
+        return companyId;
     }
 
     public String getFirstName() {
@@ -67,12 +67,12 @@ public class EmployeeDTO {
         return description;
     }
 
-    public Office getOffice() {
-        return office;
+    public Long getOfficeId() {
+        return officeId;
     }
 
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
 
     public void setFirstName(String firstName) {
@@ -107,7 +107,7 @@ public class EmployeeDTO {
         this.description = description;
     }
 
-    public void setOffice(Office office) {
-        this.office = office;
+    public void setOfficeId(Long officeId) {
+        this.officeId = officeId;
     }
 }

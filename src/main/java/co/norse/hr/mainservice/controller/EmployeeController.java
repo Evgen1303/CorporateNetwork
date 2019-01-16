@@ -1,5 +1,6 @@
 package co.norse.hr.mainservice.controller;
 
+import co.norse.hr.mainservice.dto.EmployeeDTO;
 import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.service.EmployeeQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,8 +44,7 @@ public final class EmployeeController {
     //TODO
     @PutMapping("/{id}")
     public ResponseEntity<Employee> updateEmployeePut (@RequestParam Long id,
-                                                                     @RequestBody Employee employee) {
-        employee.setId(id);
+                                                                     @RequestBody EmployeeDTO employee) {
         employeeQueryService.updateEmployee(employee);
         return ResponseEntity.ok(employee);
     }
