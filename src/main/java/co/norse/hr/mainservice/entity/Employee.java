@@ -1,9 +1,9 @@
 package co.norse.hr.mainservice.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import javax.persistence.*;
 
 @Entity
 public class Employee {
@@ -11,6 +11,8 @@ public class Employee {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "company_id")
     private Company company;
     private String firstName;
     private String lastName;
@@ -20,6 +22,8 @@ public class Employee {
     private String roomNumber;
     private String position;
     private String description;
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "office_id")
     private Office office;
 
     @Override
