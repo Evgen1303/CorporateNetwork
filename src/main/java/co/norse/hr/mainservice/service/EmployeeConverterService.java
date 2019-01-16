@@ -2,7 +2,9 @@ package co.norse.hr.mainservice.service;
 
 import co.norse.hr.mainservice.dto.EmployeeDto;
 import co.norse.hr.mainservice.entity.Employee;
+import org.springframework.stereotype.Service;
 
+@Service
 public class EmployeeConverterService {
 
     /*

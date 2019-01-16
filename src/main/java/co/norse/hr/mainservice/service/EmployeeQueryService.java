@@ -12,13 +12,12 @@ import java.util.Optional;
 @Service
 public class EmployeeQueryService {
     private EmployeeRepository employeeRepository;
+    private EmployeeConverterService employeeConverterService;
 
     @Autowired
-    private EmployeeConverterService employeeConverterService = new EmployeeConverterService();
-
-    @Autowired
-    public EmployeeQueryService(EmployeeRepository employeeRepository) {
+    public EmployeeQueryService(EmployeeRepository employeeRepository, EmployeeConverterService employeeConverterService) {
         this.employeeRepository = employeeRepository;
+        this.employeeConverterService = employeeConverterService;
     }
 
     public Employee getEmployeeById(Long id) {
