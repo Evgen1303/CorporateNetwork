@@ -1,27 +1,25 @@
 package co.norse.hr.mainservice.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
+//@SecondaryTable(name = "employee")
 public class EmployeeSkill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Employee employeeId;
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "employee_id", referencedColumnName = "id")
+    //@OnDelete(action = OnDeleteAction.CASCADE)
+    private Employee employee;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "skill_id")
+   /* @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Skill.class)
+    @JoinColumn(name = "skill_id", referencedColumnName = "id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private Skill skillId;
+    private Skill skillId;*/
 
     @NotNull
     private int level;
@@ -30,21 +28,21 @@ public class EmployeeSkill {
         return id;
     }
 
-    public Employee getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public Skill getSkillId() {
+    /*public Skill getSkillId() {
         return skillId;
     }
 
     public void setSkillId(Skill skillId) {
         this.skillId = skillId;
-    }
+    }*/
 
     public int getLevel() {
         return level;
@@ -58,8 +56,8 @@ public class EmployeeSkill {
     public String toString() {
         return "EmployeeSkill{" +
                 "id=" + id +
-                ", employeeId=" + employeeId +
-                ", skillId=" + skillId +
+                ", employee=" + employee +
+                //", skillId=" + skillId +
                 ", level=" + level +
                 '}';
     }
