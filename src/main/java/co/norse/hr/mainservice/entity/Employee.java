@@ -11,11 +11,9 @@ public class Employee {
     @Id
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "company_id")
     private Company company;
-
     private String firstName;
     private String lastName;
     private int birthday;
@@ -24,7 +22,6 @@ public class Employee {
     private String roomNumber;
     private String position;
     private String description;
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "office_id")
     private Office office;
