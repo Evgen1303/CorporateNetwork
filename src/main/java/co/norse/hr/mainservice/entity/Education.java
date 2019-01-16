@@ -9,7 +9,6 @@ import javax.persistence.Id;
 public class Education {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    //@Column(name = "id")
     private Long id;
     private String name;
     private String description;
