@@ -2,8 +2,8 @@ package co.norse.hr.mainservice.service;
 
 import co.norse.hr.mainservice.dto.EmployeeDto;
 import co.norse.hr.mainservice.entity.Employee;
-import co.norse.hr.mainservice.expection.EmployeeNotFoundException;
-import co.norse.hr.mainservice.repository.EmployeeRepository;
+import co.norse.hr.mainservice.exception.EmployeeNotFoundException;
+import co.norse.hr.mainservice.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,13 +14,16 @@ public class EmployeeQueryService {
     private EmployeeRepository employeeRepository;
 
     @Autowired
+    private EmployeeConverterService employeeConverterService = new EmployeeConverterService();
+
+    @Autowired
     public EmployeeQueryService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
 
     public Employee getEmployeeById(Long id) {
         Optional<Employee> result = employeeRepository.findById(id);
-        return result.orElseThrow(EmployeeNotFoundException::new);
+        return result.orElseThrow(EmployeeNotFoundException ::new);
     }
 
     public void saveEmployee(Employee employee) {
@@ -52,7 +55,7 @@ public class EmployeeQueryService {
     }
 
     public void patchEmployee (EmployeeDto employeeDto, Long id) {
-        EmployeeDto oldEmployeeDto = this.getEmployeeById(id).convertToDto();
+        EmployeeDto oldEmployeeDto = employeeConverterService.convertToDto(this.getEmployeeById(id));
         if (employeeDto.getBirthday()==0) {
             employeeDto.setBirthday(oldEmployeeDto.getBirthday());
         }
@@ -83,6 +86,6 @@ public class EmployeeQueryService {
         if (employeeDto.getRoomNumber().length()==0) {
             employeeDto.setRoomNumber(oldEmployeeDto.getRoomNumber());
         }
-        this.updateEmployee(employeeDto.convertToEntity());
+        this.updateEmployee(employeeConverterService.convertToEntity(employeeDto));
     }
 }
