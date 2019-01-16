@@ -1,6 +1,6 @@
 package co.norse.hr.mainservice.service;
 
-import co.norse.hr.mainservice.dto.EmployeeDTO;
+import co.norse.hr.mainservice.dto.EmployeeDto;
 import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.expection.EmployeeNotFoundException;
 import co.norse.hr.mainservice.repository.EmployeeRepository;
@@ -51,8 +51,8 @@ public class EmployeeQueryService {
         employeeRepository.save(employee);
     }
 
-    public EmployeeDTO patchEmployee (EmployeeDTO employeeDto, Long id) {
-        EmployeeDTO oldEmployeeDto = this.getEmployeeById(id).convertToDto();
+    public void patchEmployee (EmployeeDto employeeDto, Long id) {
+        EmployeeDto oldEmployeeDto = this.getEmployeeById(id).convertToDto();
         if (employeeDto.getBirthday()==0) {
             employeeDto.setBirthday(oldEmployeeDto.getBirthday());
         }
@@ -84,6 +84,5 @@ public class EmployeeQueryService {
             employeeDto.setRoomNumber(oldEmployeeDto.getRoomNumber());
         }
         this.updateEmployee(employeeDto.convertToEntity());
-        return employeeDto;
     }
 }

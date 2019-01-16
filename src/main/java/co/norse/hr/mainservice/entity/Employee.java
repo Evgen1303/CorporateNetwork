@@ -1,6 +1,6 @@
 package co.norse.hr.mainservice.entity;
 
-import co.norse.hr.mainservice.dto.EmployeeDTO;
+import co.norse.hr.mainservice.dto.EmployeeDto;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -41,8 +41,8 @@ public class Employee {
                 ']';
     }
 
-    public EmployeeDTO convertToDto() {
-        EmployeeDTO dto = new EmployeeDTO();
+    public EmployeeDto convertToDto() {
+        EmployeeDto dto = new EmployeeDto();
         dto.setBirthday(this.birthday);
         dto.setCompanyId(this.company.getId());
         dto.setDescription(this.description);

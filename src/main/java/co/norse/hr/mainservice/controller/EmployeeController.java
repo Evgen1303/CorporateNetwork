@@ -1,6 +1,6 @@
 package co.norse.hr.mainservice.controller;
 
-import co.norse.hr.mainservice.dto.EmployeeDTO;
+import co.norse.hr.mainservice.dto.EmployeeDto;
 import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.service.EmployeeQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,20 +18,21 @@ public final class EmployeeController {
         this.employeeQueryService = employeeQueryService;
     }
 
+    //TODO: DTO
     @GetMapping
     public Iterable<Employee> getAllEmployees() {
         return employeeQueryService.getAllEmployees();
     }
 
     @GetMapping("/{id}")
-    public EmployeeDTO getEmployee(@PathVariable Long id) {
+    public EmployeeDto getEmployee(@PathVariable Long id) {
         return employeeQueryService.getEmployeeById(id).convertToDto();
     }
 
     @PostMapping
-    public EmployeeDTO createEmployee (@RequestBody Employee employee) {
-        employeeQueryService.saveEmployee(employee);
-        return employee.convertToDto();
+    public EmployeeDto createEmployee (@RequestBody EmployeeDto employeeDto) {
+        employeeQueryService.saveEmployee(employeeDto.convertToEntity());
+        return employeeDto;
     }
 
     @DeleteMapping("/{id}")
@@ -40,16 +41,18 @@ public final class EmployeeController {
         return ResponseEntity.noContent().build();
     }
 
-
-    //TODO
     @PutMapping("/{id}")
-    public ResponseEntity<Employee> updateEmployeePut (@RequestParam Long id,
-                                                                     @RequestBody EmployeeDTO employeeDTO) {
-        Employee employee = employeeDTO.convertToEntity();
+    public ResponseEntity<EmployeeDto> putEmployee (@PathVariable Long id,
+                                                                     @RequestBody EmployeeDto employeeDto) {
+        Employee employee = employeeDto.convertToEntity();
         employeeQueryService.updateEmployee(employee);
-        return ResponseEntity.ok(employee);
+        return ResponseEntity.ok(employee.convertToDto());
     }
 
-    //TODO: PATCH
+    @PatchMapping("/{id}")
+    public ResponseEntity<EmployeeDto> patchEmployee (@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
+        employeeQueryService.patchEmployee(employeeDto, id);
+        return ResponseEntity.ok(employeeDto);
+    }
 
 }

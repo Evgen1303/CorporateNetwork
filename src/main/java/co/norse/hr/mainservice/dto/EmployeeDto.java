@@ -5,7 +5,7 @@ import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.entity.Office;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class EmployeeDTO {
+public class EmployeeDto {
     private Long companyId;
     private String firstName;
     private String lastName;
@@ -19,6 +19,7 @@ public class EmployeeDTO {
 
     @Autowired
     private CompanyQueryService companyQueryService = new CompanyQueryService();
+    @Autowired
     private OfficeQueryService officeQueryService = new OfficeQueryService();
 
     @Override
