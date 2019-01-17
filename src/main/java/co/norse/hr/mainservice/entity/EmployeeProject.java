@@ -27,8 +27,8 @@ public class EmployeeProject {
     public String toString(){
         return "Project[" +
                 "id=" + id +
-                ", employeeId=" + employee +
-                ", projectId=" + project +
+                ", employeeId=" + employee.toString() +
+                ", projectId=" + project.toString() +
                 ", position=" + position  +
                 ", start=" + start  +
                 ", end=" + end  +

@@ -1,8 +1,11 @@
 package co.norse.hr.mainservice.controller;
 
-
+import co.norse.hr.mainservice.dto.EmployeeProjectDto;
+import co.norse.hr.mainservice.dto.ProjectDto;
 import co.norse.hr.mainservice.entity.EmployeeProject;
 import co.norse.hr.mainservice.entity.Project;
+import co.norse.hr.mainservice.service.EmployeeProjectConverterService;
+import co.norse.hr.mainservice.service.ProjectConverterService;
 import co.norse.hr.mainservice.service.ProjectQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,12 +17,16 @@ import java.util.List;
 @RequestMapping
 public class ProjectController {
     private ProjectQueryService projectQueryService;
+    private ProjectConverterService projectConverterService;
+    private EmployeeProjectConverterService employeeProjectConverterService;
 
     @Autowired
-    public ProjectController(ProjectQueryService projectQueryService) {
+    public ProjectController(ProjectQueryService projectQueryService, ProjectConverterService projectConverterService) {
         this.projectQueryService = projectQueryService;
+        this.projectConverterService = projectConverterService;
     }
 
+    //TODO: DTO
     @GetMapping("projects")
     public List<Project> getAllProjects() {
         return projectQueryService.getAllProjects();
@@ -31,7 +38,8 @@ public class ProjectController {
     }
 
     @PostMapping("projects")
-    public Project createProject(@RequestBody Project project) {
+    public Project createProject(@RequestBody ProjectDto projectDto) {
+        Project project = projectConverterService.convertToEntity(projectDto);
         projectQueryService.saveProject(project);
         return project;
     }
@@ -42,12 +50,18 @@ public class ProjectController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping("projects")
-    public ResponseEntity<Project> updateProjectPut(@RequestParam Long id,
-                                                    @RequestBody Project project) {
-        project.setId(id);
+    @PutMapping("projects/{id}")
+    public ResponseEntity<Project> updateProjectPut(@PathVariable Long id,
+                                                    @RequestBody ProjectDto projectDto) {
+        Project project = projectConverterService.convertToEntity(projectDto);
         projectQueryService.updateProject(project);
         return ResponseEntity.ok(project);
+    }
+
+    @PatchMapping("projects/{id}")
+    public ResponseEntity<Project> patchProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
+        projectQueryService.patchProject(projectDto, id);
+        return ResponseEntity.ok(projectConverterService.convertToEntity(projectDto));
     }
 
     //////////// employeeprojects
@@ -62,7 +76,8 @@ public class ProjectController {
     }
 
     @PostMapping("employeeprojects")
-    public EmployeeProject createEmployeeProject(@RequestBody EmployeeProject employeeProject) {
+    public EmployeeProject createEmployeeProject(@RequestBody EmployeeProjectDto employeeProjectDto) {
+        EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
         projectQueryService.saveEmployeeProject(employeeProject);
         return employeeProject;
     }
@@ -75,10 +90,17 @@ public class ProjectController {
 
     @PutMapping("employeeprojects")
     public ResponseEntity<EmployeeProject> updateEmployeeProjectPut(@RequestParam Long id,
-                                                                    @RequestBody EmployeeProject employeeProject) {
-        employeeProject.setId(id);
+                                                                    @RequestBody EmployeeProjectDto employeeProjectDto) {
+        EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
         projectQueryService.updateEmployeeProject(employeeProject);
         return ResponseEntity.ok(employeeProject);
     }
+
+    @PatchMapping("employeeprojects/{id}")
+    public ResponseEntity<EmployeeProject> patchProject(@PathVariable Long id, @RequestBody EmployeeProjectDto employeeProjectDto) {
+        projectQueryService.patchEmployeeProject(employeeProjectDto, id);
+        return ResponseEntity.ok(employeeProjectConverterService.convertToEntity(employeeProjectDto));
+    }
+
 
 }

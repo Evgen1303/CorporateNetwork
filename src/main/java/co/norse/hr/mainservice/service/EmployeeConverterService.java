@@ -10,7 +10,6 @@ public class EmployeeConverterService {
     /*
     private CompanyQueryService companyQueryService;
     private OfficeQueryService officeQueryService;
-
     @Autowired
     EmployeeConverterService(CompanyQueryService companyQueryService, OfficeQueryService officeQueryService) {
         this.companyQueryService = companyQueryService;

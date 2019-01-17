@@ -1,8 +1,5 @@
 package co.norse.hr.mainservice.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 
 @Entity
@@ -30,7 +27,7 @@ public class Employee {
     public String toString() {
         return "Employee[" +
                 "id=" + id +
-//                ", companyId=" + company.toString() +
+                ", companyId=" + company.toString() +
                 ", firstName='" + firstName + ", " +
                 ", lastName='" + lastName + ", " +
                 ", birthday=" + birthday +
@@ -39,7 +36,7 @@ public class Employee {
                 ", roomNumber='" + roomNumber + ", " +
                 ", position='" + position + ", " +
                 ", description='" + description + ", " +
-//                ", officeId=" + office.toString() +
+                ", officeId=" + office.toString() +
                 ']';
     }
 
