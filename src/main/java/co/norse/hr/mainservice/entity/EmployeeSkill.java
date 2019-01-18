@@ -4,22 +4,19 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
-//@SecondaryTable(name = "employee")
 public class EmployeeSkill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "employee_id", referencedColumnName = "id")
-    //@OnDelete(action = OnDeleteAction.CASCADE)
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "employee_id")
     private Employee employee;
 
-   /* @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, targetEntity = Skill.class)
-    @JoinColumn(name = "skill_id", referencedColumnName = "id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Skill skillId;*/
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "skill_id")
+    private Skill skill;
 
     @NotNull
     private int level;
@@ -36,13 +33,13 @@ public class EmployeeSkill {
         this.employee = employee;
     }
 
-    /*public Skill getSkillId() {
-        return skillId;
+    public Skill getSkill() {
+        return skill;
     }
 
-    public void setSkillId(Skill skillId) {
-        this.skillId = skillId;
-    }*/
+    public void setSkill(Skill skill) {
+        this.skill = skill;
+    }
 
     public int getLevel() {
         return level;
@@ -57,7 +54,7 @@ public class EmployeeSkill {
         return "EmployeeSkill{" +
                 "id=" + id +
                 ", employee=" + employee +
-                //", skillId=" + skillId +
+                ", skill=" + skill +
                 ", level=" + level +
                 '}';
     }
