@@ -21,11 +21,6 @@ public final class EmployeeController {
         this.employeeQueryService = employeeQueryService;
         this.employeeConverterService = employeeConverterService;
     }
-    
-    @GetMapping
-    public Iterable<Employee> getAllEmployees() {
-        return employeeQueryService.getAllEmployees();
-    }
 
     @GetMapping
     public Page<Employee> getPages(@RequestParam int page, @RequestParam int pageSize, @RequestParam String sortBy){
