@@ -2,20 +2,20 @@ package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.entity.EmployeeSkill;
 import co.norse.hr.mainservice.entity.Skill;
-import co.norse.hr.mainservice.service.SkillQueryService;
+import co.norse.hr.mainservice.service.EmployeeSkillQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("employee_skills")
-public class SkillController {
+public class EmployeeSkillController {
 
-    private SkillQueryService skillQueryService;
+    private EmployeeSkillQueryService skillQueryService;
 
     @Autowired
-    public SkillController(SkillQueryService skillQueryService) {
-        this.skillQueryService = skillQueryService;
+    public EmployeeSkillController(EmployeeSkillQueryService employeeSkillQueryService) {
+        this.skillQueryService = employeeSkillQueryService;
     }
 
     @GetMapping
@@ -46,7 +46,7 @@ public class SkillController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Skill> deleteSkill(@PathVariable Long id) {
-        skillQueryService.deleteSkillById(id);
+        skillQueryService.deleteSkill(id);
         return ResponseEntity.noContent().build();
     }
 
