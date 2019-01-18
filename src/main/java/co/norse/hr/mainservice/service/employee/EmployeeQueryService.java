@@ -1,4 +1,4 @@
-package co.norse.hr.mainservice.service;
+package co.norse.hr.mainservice.service.employee;
 
 import co.norse.hr.mainservice.dto.EmployeeDto;
 import co.norse.hr.mainservice.entity.Employee;
@@ -6,9 +6,7 @@ import co.norse.hr.mainservice.exception.EmployeeNotFoundException;
 import co.norse.hr.mainservice.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
 

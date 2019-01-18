@@ -2,8 +2,8 @@ package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.EmployeeDto;
 import co.norse.hr.mainservice.entity.Employee;
-import co.norse.hr.mainservice.service.EmployeeConverterService;
-import co.norse.hr.mainservice.service.EmployeeQueryService;
+import co.norse.hr.mainservice.service.employee.EmployeeConverterService;
+import co.norse.hr.mainservice.service.employee.EmployeeQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
