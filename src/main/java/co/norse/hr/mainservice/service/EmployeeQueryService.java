@@ -7,6 +7,7 @@ import co.norse.hr.mainservice.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import java.util.Optional;
@@ -39,8 +40,8 @@ public class EmployeeQueryService {
         return result;
     }
 
-    public Page<Employee> getPage(int page, int pageSize, String sortBy) {
-        return employeeRepository.findAll(PageRequest.of(page, pageSize, Sort.by(sortBy).ascending()));
+    public Page<Employee> getPage(Pageable pageable) {
+        return employeeRepository.findAll(pageable);
     }
 
     public void deleteEmployeeById(Long id) {
