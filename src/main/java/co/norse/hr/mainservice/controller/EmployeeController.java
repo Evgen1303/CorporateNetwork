@@ -5,12 +5,18 @@ import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.service.EmployeeConverterService;
 import co.norse.hr.mainservice.service.EmployeeQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("employees")
 public final class EmployeeController {
+    private static final int DEFAULT_PAGE_SIZE = 20;
+    private static final String DEFAULT_SORT_FIELD = "firstName";
 
     private EmployeeQueryService employeeQueryService;
     private EmployeeConverterService employeeConverterService;
@@ -21,10 +27,13 @@ public final class EmployeeController {
         this.employeeConverterService = employeeConverterService;
     }
 
-    //TODO: DTO
     @GetMapping
-    public Iterable<Employee> getAllEmployees() {
-        return employeeQueryService.getAllEmployees();
+    public Page<Employee> getPages(
+            @PageableDefault(size = DEFAULT_PAGE_SIZE)
+            @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+                    Pageable pageable
+    ) {
+        return employeeQueryService.getPage(pageable);
     }
 
     @GetMapping("/{id}")
