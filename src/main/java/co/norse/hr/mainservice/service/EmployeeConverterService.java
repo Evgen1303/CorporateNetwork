@@ -35,6 +35,7 @@ public class EmployeeConverterService {
         dto.setOfficeId(employee.getOffice().getId());
         dto.setPosition(employee.getPosition());
         dto.setRoomNumber(employee.getRoomNumber());
+        dto.setPhone(employee.getPhone());
         return dto;
     }
 
@@ -90,6 +91,11 @@ public class EmployeeConverterService {
             employee.setRoomNumber(employeeDto.getRoomNumber());
         } catch (EntityNotFoundException e) {
             throw new RequestValidationException("Invalid room number value");
+        }
+        try {
+            employee.setPhone(employeeDto.getPhone());
+        } catch (EntityNotFoundException e) {
+            throw new RequestValidationException("Invalid phone number value");
         }
         return employee;
     }
