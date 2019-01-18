@@ -1,4 +1,4 @@
-package co.norse.hr.mainservice.service;
+package co.norse.hr.mainservice.service.employee;
 
 import co.norse.hr.mainservice.dto.EmployeeDto;
 import co.norse.hr.mainservice.entity.Company;
