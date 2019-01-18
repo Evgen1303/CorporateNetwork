@@ -1,19 +1,7 @@
-package co.norse.hr.mainservice.entity;
+package co.norse.hr.mainservice.dto;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
-import javax.persistence.*;
-
-@Entity
-public class Employee {
-
-    @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
-    private Long id;
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "company_id")
-    private Company company;
+public class EmployeeDto {
+    private Long companyId;
     private String firstName;
     private String lastName;
     private int birthday;
@@ -22,15 +10,12 @@ public class Employee {
     private String roomNumber;
     private String position;
     private String description;
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "office_id")
-    private Office office;
+    private Long officeId;
 
     @Override
     public String toString() {
         return "Employee[" +
-                "id=" + id +
-//                ", companyId=" + company.toString() +
+                ", companyId=" + companyId.toString() +
                 ", firstName='" + firstName + ", " +
                 ", lastName='" + lastName + ", " +
                 ", birthday=" + birthday +
@@ -39,16 +24,12 @@ public class Employee {
                 ", roomNumber='" + roomNumber + ", " +
                 ", position='" + position + ", " +
                 ", description='" + description + ", " +
-//                ", officeId=" + office.toString() +
+                ", officeId=" + officeId.toString() +
                 ']';
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public Company getCompany() {
-        return company;
+    public Long getCompanyId() {
+        return companyId;
     }
 
     public String getFirstName() {
@@ -83,16 +64,12 @@ public class Employee {
         return description;
     }
 
-    public Office getOffice() {
-        return office;
+    public Long getOfficeId() {
+        return officeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public void setCompany(Company company) {
-        this.company = company;
+    public void setCompanyId(Long companyId) {
+        this.companyId = companyId;
     }
 
     public void setFirstName(String firstName) {
@@ -127,7 +104,7 @@ public class Employee {
         this.description = description;
     }
 
-    public void setOffice(Office office) {
-        this.office = office;
+    public void setOfficeId(Long officeId) {
+        this.officeId = officeId;
     }
 }
