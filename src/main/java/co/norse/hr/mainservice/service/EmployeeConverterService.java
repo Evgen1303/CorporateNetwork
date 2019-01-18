@@ -5,7 +5,6 @@ import co.norse.hr.mainservice.entity.Company;
 import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.entity.Office;
 import co.norse.hr.mainservice.exception.RequestValidationException;
-import co.norse.hr.mainservice.repositories.CompanyRepository;
 import co.norse.hr.mainservice.service.company.CompanyQueryService;
 import co.norse.hr.mainservice.service.office.OfficeQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,20 +24,6 @@ public class EmployeeConverterService {
     }
 
 
-
-
-    /*
-    private CompanyQueryService companyQueryService;
-    private OfficeQueryService officeQueryService;
-
-    @Autowired
-    EmployeeConverterService(CompanyQueryService companyQueryService, OfficeQueryService officeQueryService) {
-        this.companyQueryService = companyQueryService;
-        this.officeQueryService = officeQueryService;
-    }
-    */
-
-
     public EmployeeDto convertToDto(Employee employee) {
         EmployeeDto dto = new EmployeeDto();
         dto.setBirthday(employee.getBirthday());
@@ -54,29 +39,58 @@ public class EmployeeConverterService {
     }
 
     public Employee convertToEntity(EmployeeDto employeeDto) {
-        //check if fields are blank or not
 
-        Company company;
         Office office;
         try {
-            company = companyQueryService.findOneOrThrowException(employeeDto.getCompanyId());
             office = officeQueryService.findOneOrThrowException(employeeDto.getOfficeId());
         } catch (EntityNotFoundException e) {
-            //todo add message
-            throw new RequestValidationException();
+            throw new RequestValidationException("Office not found");
+        }
+        Company company;
+        try {
+            company = companyQueryService.findOneOrThrowException(employeeDto.getCompanyId());
+        } catch (EntityNotFoundException e) {
+            throw new RequestValidationException("Company not found");
         }
 
-
         Employee employee = new Employee();
-        employee.setBirthday(employeeDto.getBirthday());
         employee.setCompany(company);
-        employee.setDescription(employeeDto.getDescription());
-        employee.setEmail(employeeDto.getEmail());
-        employee.setFirstName(employeeDto.getFirstName());
-        employee.setLastName(employeeDto.getLastName());
         employee.setOffice(office);
-        employee.setPosition(employeeDto.getPosition());
-        employee.setRoomNumber(employeeDto.getRoomNumber());
+        try {
+            employee.setBirthday(employeeDto.getBirthday());
+        } catch (EntityNotFoundException e) {
+            throw new RequestValidationException("Invalid birthday value");
+        }
+        try {
+            employee.setDescription(employeeDto.getDescription());
+        } catch (EntityNotFoundException e) {
+            throw new RequestValidationException("Invalid description value");
+        }
+        try {
+            employee.setEmail(employeeDto.getEmail());
+        } catch (EntityNotFoundException e) {
+            throw new RequestValidationException("Invalid email value");
+        }
+        try {
+            employee.setFirstName(employeeDto.getFirstName());
+        } catch (EntityNotFoundException e) {
+            throw new RequestValidationException("Invalid first name value");
+        }
+        try {
+            employee.setLastName(employeeDto.getLastName());
+        } catch (EntityNotFoundException e) {
+            throw new RequestValidationException("Invalid last name value");
+        }
+        try {
+            employee.setPosition(employeeDto.getPosition());
+        } catch (EntityNotFoundException e) {
+            throw new RequestValidationException("Invalid position value");
+        }
+        try {
+            employee.setRoomNumber(employeeDto.getRoomNumber());
+        } catch (EntityNotFoundException e) {
+            throw new RequestValidationException("Invalid room number value");
+        }
         return employee;
     }
 }
