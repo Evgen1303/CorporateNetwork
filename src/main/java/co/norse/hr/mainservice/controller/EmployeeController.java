@@ -5,6 +5,7 @@ import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.service.EmployeeConverterService;
 import co.norse.hr.mainservice.service.EmployeeQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,11 +21,15 @@ public final class EmployeeController {
         this.employeeQueryService = employeeQueryService;
         this.employeeConverterService = employeeConverterService;
     }
-
-    //TODO: DTO
+    
     @GetMapping
     public Iterable<Employee> getAllEmployees() {
         return employeeQueryService.getAllEmployees();
+    }
+
+    @GetMapping
+    public Page<Employee> getPages(@RequestParam int page, @RequestParam int pageSize){
+        return employeeQueryService.getPage(page, pageSize);
     }
 
     @GetMapping("/{id}")
