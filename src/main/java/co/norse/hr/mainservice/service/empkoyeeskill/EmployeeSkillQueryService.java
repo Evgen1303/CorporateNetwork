@@ -1,5 +1,6 @@
-package co.norse.hr.mainservice.service;
+package co.norse.hr.mainservice.service.empkoyeeskill;
 
+import co.norse.hr.mainservice.dto.EmployeeSkillDTO;
 import co.norse.hr.mainservice.entity.EmployeeSkill;
 import co.norse.hr.mainservice.entity.Skill;
 import co.norse.hr.mainservice.exception.ResourceNotFoundException;
@@ -24,29 +25,19 @@ public class EmployeeSkillQueryService {
     }
 
     public Skill getSkillById(Long id) {
-
         Optional<Skill> skill = skillRepository.findById(id);
-
-        if (!skill.isPresent()) {
-            throw new ResourceNotFoundException();
-        }
-        return skill.get();
+        return skill.orElseThrow(ResourceNotFoundException::new);
     }
 
     public EmployeeSkill getEmployeeSkillById(Long id) {
 
         Optional<EmployeeSkill> employeeSkill = employeeSkillRepository.findById(id);
-
-        if (!employeeSkill.isPresent()) {
-            throw new ResourceNotFoundException();
-        }
-        return employeeSkill.get();
+        return employeeSkill.orElseThrow(ResourceNotFoundException::new);
     }
 
     public Iterable<Skill> getAllSkills() {
 
         Iterable<Skill> skills = skillRepository.findAll();
-
         if (!skills.iterator().hasNext()) {
             throw new ResourceNotFoundException();
         }
@@ -63,43 +54,30 @@ public class EmployeeSkillQueryService {
         return employeeSkills;
     }
 
-    public void saveSkill(Skill skill) {
-        skillRepository.save(skill);
-    }
-
     public void saveEmployeeSkill(EmployeeSkill employeeSkill) {
         employeeSkillRepository.save(employeeSkill);
-    }
-
-    public void deleteSkill(Long id) {
-        skillRepository.deleteById(id);
     }
 
     public void deleteEmployeeSkill(Long id) {
         employeeSkillRepository.deleteById(id);
     }
 
-    public void deleteSkill(Skill skill) {
-        skillRepository.delete(skill);
-    }
-
     public void deleteEmployeeSkill(EmployeeSkill employeeSkill) {
         employeeSkillRepository.delete(employeeSkill);
-    }
-
-    public void deleteAllSkill() {
-        skillRepository.deleteAll();
     }
 
     public void deleteAllEmployeeSkill() {
         employeeSkillRepository.deleteAll();
     }
 
-    public void updateSkill(Skill skill) {
-        skillRepository.save(skill);
-    }
-
     public void updateEmployeeSkill(EmployeeSkill employeeSkill) {
         employeeSkillRepository.save(employeeSkill);
     }
+
+    //TODO PATCH
+    /*public void patchEmployeeSkill(Long id, EmployeeSkill employeeSkill){
+        EmployeeSkill oldEmployeeSkill1 = this.getEmployeeSkillById(id);
+
+    }*/
+
 }

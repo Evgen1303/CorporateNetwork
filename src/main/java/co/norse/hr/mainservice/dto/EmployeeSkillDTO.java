@@ -35,13 +35,4 @@ public class EmployeeSkillDTO {
         this.level = level;
     }
 
-    @Override
-    public String toString() {
-        return "EmployeeSkillDTO{" +
-                "id=" + id +
-                ", employeeId=" + employeeId +
-                ", skillId=" + skillId +
-                ", level=" + level +
-                '}';
-    }
 }
