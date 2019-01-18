@@ -5,6 +5,8 @@ spring:
     url: jdbc:mysql://localhost/hr
     username: root
     password: root
+  jackson:
+    property-naming-strategy: SNAKE_CASE
   jpa:
     hibernate:
       ddl-auto: update
