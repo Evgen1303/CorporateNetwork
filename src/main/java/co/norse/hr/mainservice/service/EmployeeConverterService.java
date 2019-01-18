@@ -53,50 +53,17 @@ public class EmployeeConverterService {
         } catch (EntityNotFoundException e) {
             throw new RequestValidationException("Company not found");
         }
-
         Employee employee = new Employee();
         employee.setCompany(company);
         employee.setOffice(office);
-        try {
-            employee.setBirthday(employeeDto.getBirthday());
-        } catch (EntityNotFoundException e) {
-            throw new RequestValidationException("Invalid birthday value");
-        }
-        try {
-            employee.setDescription(employeeDto.getDescription());
-        } catch (EntityNotFoundException e) {
-            throw new RequestValidationException("Invalid description value");
-        }
-        try {
-            employee.setEmail(employeeDto.getEmail());
-        } catch (EntityNotFoundException e) {
-            throw new RequestValidationException("Invalid email value");
-        }
-        try {
-            employee.setFirstName(employeeDto.getFirstName());
-        } catch (EntityNotFoundException e) {
-            throw new RequestValidationException("Invalid first name value");
-        }
-        try {
-            employee.setLastName(employeeDto.getLastName());
-        } catch (EntityNotFoundException e) {
-            throw new RequestValidationException("Invalid last name value");
-        }
-        try {
-            employee.setPosition(employeeDto.getPosition());
-        } catch (EntityNotFoundException e) {
-            throw new RequestValidationException("Invalid position value");
-        }
-        try {
-            employee.setRoomNumber(employeeDto.getRoomNumber());
-        } catch (EntityNotFoundException e) {
-            throw new RequestValidationException("Invalid room number value");
-        }
-        try {
-            employee.setPhone(employeeDto.getPhone());
-        } catch (EntityNotFoundException e) {
-            throw new RequestValidationException("Invalid phone number value");
-        }
+        employee.setBirthday(employeeDto.getBirthday());
+        employee.setDescription(employeeDto.getDescription());
+        employee.setEmail(employeeDto.getEmail());
+        employee.setFirstName(employeeDto.getFirstName());
+        employee.setLastName(employeeDto.getLastName());
+        employee.setPosition(employeeDto.getPosition());
+        employee.setRoomNumber(employeeDto.getRoomNumber());
+        employee.setPhone(employeeDto.getPhone());
         return employee;
     }
 }
