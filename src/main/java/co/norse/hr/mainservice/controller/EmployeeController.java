@@ -28,8 +28,8 @@ public final class EmployeeController {
     }
 
     @GetMapping
-    public Page<Employee> getPages(@RequestParam int page, @RequestParam int pageSize){
-        return employeeQueryService.getPage(page, pageSize);
+    public Page<Employee> getPages(@RequestParam int page, @RequestParam int pageSize, @RequestParam String sortBy){
+        return employeeQueryService.getPage(page, pageSize, sortBy);
     }
 
     @GetMapping("/{id}")
