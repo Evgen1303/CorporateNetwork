@@ -16,32 +16,21 @@ public class EmployeeSkillQueryService {
 
     private SkillRepository skillRepository;
     private EmployeeSkillRepository employeeSkillRepository;
+    private EmployeeSkillConverterService employeeSkillConverterService;
 
     @Autowired
     public EmployeeSkillQueryService(SkillRepository skillRepository,
-                                     EmployeeSkillRepository employeeSkillRepository) {
+                                     EmployeeSkillRepository employeeSkillRepository,
+                                     EmployeeSkillConverterService employeeSkillConverterService) {
         this.skillRepository = skillRepository;
         this.employeeSkillRepository = employeeSkillRepository;
-    }
-
-    public Skill getSkillById(Long id) {
-        Optional<Skill> skill = skillRepository.findById(id);
-        return skill.orElseThrow(ResourceNotFoundException::new);
+        this.employeeSkillConverterService = employeeSkillConverterService;
     }
 
     public EmployeeSkill getEmployeeSkillById(Long id) {
 
         Optional<EmployeeSkill> employeeSkill = employeeSkillRepository.findById(id);
         return employeeSkill.orElseThrow(ResourceNotFoundException::new);
-    }
-
-    public Iterable<Skill> getAllSkills() {
-
-        Iterable<Skill> skills = skillRepository.findAll();
-        if (!skills.iterator().hasNext()) {
-            throw new ResourceNotFoundException();
-        }
-        return skills;
     }
 
     public Iterable<EmployeeSkill> getAllEmployeeSkills() {
@@ -70,10 +59,12 @@ public class EmployeeSkillQueryService {
         employeeSkillRepository.deleteAll();
     }
 
-    public void updateEmployeeSkill(EmployeeSkill employeeSkill) {
+    public EmployeeSkill updateEmployeeSkill(Long id, EmployeeSkillDTO employeeSkillDTO) {
+        EmployeeSkill employeeSkill = employeeSkillConverterService.convertToEntity(employeeSkillDTO);
+        employeeSkill.setId(id);
         employeeSkillRepository.save(employeeSkill);
+        return employeeSkill;
     }
-
     //TODO PATCH
     /*public void patchEmployeeSkill(Long id, EmployeeSkill employeeSkill){
         EmployeeSkill oldEmployeeSkill1 = this.getEmployeeSkillById(id);

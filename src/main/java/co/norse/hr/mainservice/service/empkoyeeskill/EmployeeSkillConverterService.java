@@ -3,19 +3,21 @@ package co.norse.hr.mainservice.service.empkoyeeskill;
 import co.norse.hr.mainservice.dto.EmployeeSkillDTO;
 import co.norse.hr.mainservice.entity.EmployeeSkill;
 import co.norse.hr.mainservice.service.EmployeeQueryService;
+import co.norse.hr.mainservice.service.skill.SkillQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class EmployeeSkillConverterService {
 
-    private EmployeeSkillQueryService employeeSkillQueryService;
     private EmployeeQueryService employeeQueryService;
+    private SkillQueryService skillQueryService;
 
     @Autowired
-    public EmployeeSkillConverterService(EmployeeSkillQueryService employeeSkillQueryService, EmployeeQueryService employeeQueryService) {
-        this.employeeSkillQueryService = employeeSkillQueryService;
+    public EmployeeSkillConverterService(EmployeeQueryService employeeQueryService,
+                                         SkillQueryService skillQueryService) {
         this.employeeQueryService = employeeQueryService;
+        this.skillQueryService = skillQueryService;
     }
 
     public EmployeeSkillDTO convertToDTO(EmployeeSkill employeeSkill) {
@@ -29,7 +31,7 @@ public class EmployeeSkillConverterService {
     public EmployeeSkill convertToEntity(EmployeeSkillDTO employeeSkillDTO) {
         EmployeeSkill employeeSkill = new EmployeeSkill();
         employeeSkill.setEmployee(employeeQueryService.getEmployeeById(employeeSkillDTO.getEmployeeId()));
-        employeeSkill.setSkill(employeeSkillQueryService.getSkillById(employeeSkillDTO.getSkillId()));
+        employeeSkill.setSkill(skillQueryService.getSkillById(employeeSkillDTO.getSkillId()));
         employeeSkill.setLevel(employeeSkillDTO.getLevel());
         return employeeSkill;
     }

@@ -33,9 +33,8 @@ public class SkillController {
 
     @PostMapping
     public Skill createSkill(@RequestBody SkillDTO skillDTO) {
-        Skill skill = skillConverterService.convertToEntity(skillDTO);
-        skillQueryService.saveSkill(skill);
-        return skill;
+        skillQueryService.saveSkill(skillConverterService.convertToEntity(skillDTO));
+        return skillConverterService.convertToEntity(skillDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -46,9 +45,6 @@ public class SkillController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Skill> putSkill(@PathVariable Long id, @RequestBody SkillDTO skillDTO) {
-        Skill skill = skillConverterService.convertToEntity(skillDTO);
-        skill.setId(id);
-        skillQueryService.updateSkill(skill);
-        return ResponseEntity.ok(skill);
+        return ResponseEntity.ok(skillQueryService.updateSkill(id, skillDTO));
     }
 }

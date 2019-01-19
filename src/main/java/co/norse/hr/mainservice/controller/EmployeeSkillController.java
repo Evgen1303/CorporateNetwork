@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("employee_skills")
+@RequestMapping("employee-skills")
 public class EmployeeSkillController {
 
     private EmployeeSkillQueryService employeeSkillQueryService;
@@ -35,9 +35,8 @@ public class EmployeeSkillController {
 
     @PostMapping
     public EmployeeSkill createSkill(@RequestBody EmployeeSkillDTO employeeSkillDTO) {
-        EmployeeSkill employeeSkill = employeeSkillConverterService.convertToEntity(employeeSkillDTO);
-        employeeSkillQueryService.saveEmployeeSkill(employeeSkill);
-        return employeeSkill;
+        employeeSkillQueryService.saveEmployeeSkill(employeeSkillConverterService.convertToEntity(employeeSkillDTO));
+        return employeeSkillConverterService.convertToEntity(employeeSkillDTO);
     }
 
     @DeleteMapping("/{id}")
@@ -48,10 +47,7 @@ public class EmployeeSkillController {
 
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeSkill> putSkill(@PathVariable Long id, @RequestBody EmployeeSkillDTO employeeSkillDTO) {
-        EmployeeSkill employeeSkill = employeeSkillConverterService.convertToEntity(employeeSkillDTO);
-        employeeSkill.setId(id);
-        employeeSkillQueryService.updateEmployeeSkill(employeeSkill);
-        return ResponseEntity.ok(employeeSkill);
+        return ResponseEntity.ok(employeeSkillQueryService.updateEmployeeSkill(id, employeeSkillDTO));
     }
 
     //TODO PATCH
