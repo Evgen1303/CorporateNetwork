@@ -1,4 +1,4 @@
-package co.norse.hr.mainservice.service;
+package co.norse.hr.mainservice.service.project;
 
 import co.norse.hr.mainservice.dto.ProjectDto;
 import co.norse.hr.mainservice.entity.Project;
@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectConverterService {
+
     public ProjectDto convertToDto(Project project) {
         ProjectDto dto = new ProjectDto();
         dto.setDescription(project.getDescription());

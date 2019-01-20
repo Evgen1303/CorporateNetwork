@@ -1,73 +1,25 @@
-package co.norse.hr.mainservice.service;
+package co.norse.hr.mainservice.service.employeeproject;
 
 import co.norse.hr.mainservice.dto.EmployeeProjectDto;
-import co.norse.hr.mainservice.dto.ProjectDto;
 import co.norse.hr.mainservice.entity.EmployeeProject;
-import co.norse.hr.mainservice.entity.Project;
 import co.norse.hr.mainservice.exception.EmployeeProjectNotFoundException;
-import co.norse.hr.mainservice.exception.ProjectNotFoundException;
 import co.norse.hr.mainservice.repositories.EmployeeProjectRepository;
-import co.norse.hr.mainservice.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
-public class ProjectQueryService {
-
-    private ProjectRepository projectRepository;
+public class EmployeeProjectQueryService {
     private EmployeeProjectRepository employeeprojectRepository;
+    private EmployeeProjectConverterService employeeProjectConverterService;
 
     @Autowired
-    private ProjectConverterService projectConverterService = new ProjectConverterService();
-    @Autowired
-    private EmployeeProjectConverterService employeeProjectConverterService = new EmployeeProjectConverterService();
-
-    @Autowired
-    public ProjectQueryService(ProjectRepository projectRepository, EmployeeProjectRepository employeeprojectRepository) {
-        this.projectRepository = projectRepository;
+    public EmployeeProjectQueryService(EmployeeProjectRepository employeeprojectRepository, EmployeeProjectConverterService employeeProjectConverterService) {
         this.employeeprojectRepository = employeeprojectRepository;
+        this.employeeProjectConverterService = employeeProjectConverterService;
     }
 
-    public Project getProjectById(Long id) {
-        Optional<Project> result = projectRepository.findById(id);
-        if (!result.isPresent()) {
-            throw new ProjectNotFoundException();
-        }
-        return result.get();
-    }
-
-    public void saveProject(Project project) {
-        projectRepository.save(project);
-    }
-
-    public List<Project> getAllProjects() {
-        return projectRepository.findAll();
-    }
-
-    public void deleteProject(Long id) {
-        projectRepository.deleteById(id);
-    }
-
-
-    public void updateProject(Project project) {
-        projectRepository.save(project);
-    }
-
-    public void patchProject(ProjectDto projectDto, Long id) {
-        ProjectDto oldProjectDto = projectConverterService.convertToDto(this.getProjectById(id));
-        if (projectDto.getDescription().length() == 0) {
-            projectDto.setDescription(oldProjectDto.getDescription());
-        }
-        if (projectDto.getName().length() == 0) {
-            projectDto.setName(oldProjectDto.getName());
-        }
-        this.updateProject(projectConverterService.convertToEntity(projectDto));
-    }
-
-    ////////////////////////
     public EmployeeProject getEmployeeProjectById(Long id) {
         Optional<EmployeeProject> result = employeeprojectRepository.findById(id);
         if (!result.isPresent()) {
@@ -115,6 +67,5 @@ public class ProjectQueryService {
         }
         this.updateEmployeeProject(employeeProjectConverterService.convertToEntity(employeeProjectDto));
     }
-
 
 }

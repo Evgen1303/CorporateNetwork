@@ -4,9 +4,10 @@ import co.norse.hr.mainservice.dto.EmployeeProjectDto;
 import co.norse.hr.mainservice.dto.ProjectDto;
 import co.norse.hr.mainservice.entity.EmployeeProject;
 import co.norse.hr.mainservice.entity.Project;
-import co.norse.hr.mainservice.service.EmployeeProjectConverterService;
-import co.norse.hr.mainservice.service.ProjectConverterService;
-import co.norse.hr.mainservice.service.ProjectQueryService;
+import co.norse.hr.mainservice.service.employeeproject.EmployeeProjectConverterService;
+import co.norse.hr.mainservice.service.employeeproject.EmployeeProjectQueryService;
+import co.norse.hr.mainservice.service.project.ProjectConverterService;
+import co.norse.hr.mainservice.service.project.ProjectQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.List;
 @RequestMapping
 public class ProjectController {
     private ProjectQueryService projectQueryService;
+    private EmployeeProjectQueryService employeeProjectQueryService;
     private ProjectConverterService projectConverterService;
     private EmployeeProjectConverterService employeeProjectConverterService;
 
@@ -26,7 +28,6 @@ public class ProjectController {
         this.projectConverterService = projectConverterService;
     }
 
-    //TODO: DTO
     @GetMapping("projects")
     public List<Project> getAllProjects() {
         return projectQueryService.getAllProjects();
@@ -67,24 +68,24 @@ public class ProjectController {
     //////////// employeeprojects
     @GetMapping("employeeprojects")
     public Iterable<EmployeeProject> getAllEmployeeProjects() {
-        return projectQueryService.getAllEmployeeProjects();
+        return employeeProjectQueryService.getAllEmployeeProjects();
     }
 
     @GetMapping("employeeprojects/{id}")
     public EmployeeProject getEmployeeProject(@PathVariable Long id) {
-        return projectQueryService.getEmployeeProjectById(id);
+        return employeeProjectQueryService.getEmployeeProjectById(id);
     }
 
     @PostMapping("employeeprojects")
     public EmployeeProject createEmployeeProject(@RequestBody EmployeeProjectDto employeeProjectDto) {
         EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
-        projectQueryService.saveEmployeeProject(employeeProject);
+        employeeProjectQueryService.saveEmployeeProject(employeeProject);
         return employeeProject;
     }
 
     @DeleteMapping("employeeproject/{id}")
     public ResponseEntity deleteEmployeeProject(@PathVariable Long id) {
-        projectQueryService.deleteEmployeeProjectById(id);
+        employeeProjectQueryService.deleteEmployeeProjectById(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -92,13 +93,13 @@ public class ProjectController {
     public ResponseEntity<EmployeeProject> updateEmployeeProjectPut(@RequestParam Long id,
                                                                     @RequestBody EmployeeProjectDto employeeProjectDto) {
         EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
-        projectQueryService.updateEmployeeProject(employeeProject);
+        employeeProjectQueryService.updateEmployeeProject(employeeProject);
         return ResponseEntity.ok(employeeProject);
     }
 
     @PatchMapping("employeeprojects/{id}")
     public ResponseEntity<EmployeeProject> patchProject(@PathVariable Long id, @RequestBody EmployeeProjectDto employeeProjectDto) {
-        projectQueryService.patchEmployeeProject(employeeProjectDto, id);
+        employeeProjectQueryService.patchEmployeeProject(employeeProjectDto, id);
         return ResponseEntity.ok(employeeProjectConverterService.convertToEntity(employeeProjectDto));
     }
 
