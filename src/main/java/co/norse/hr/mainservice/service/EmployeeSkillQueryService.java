@@ -3,7 +3,6 @@ package co.norse.hr.mainservice.service;
 import co.norse.hr.mainservice.entity.EmployeeSkill;
 import co.norse.hr.mainservice.entity.Skill;
 import co.norse.hr.mainservice.exception.ResourceNotFoundException;
-import co.norse.hr.mainservice.repositories.EmployeeRepository;
 import co.norse.hr.mainservice.repositories.EmployeeSkillRepository;
 import co.norse.hr.mainservice.repositories.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +11,16 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class SkillQueryService {
+public class EmployeeSkillQueryService {
 
     private SkillRepository skillRepository;
     private EmployeeSkillRepository employeeSkillRepository;
-    private EmployeeRepository employeeRepository;
 
     @Autowired
-    public SkillQueryService(SkillRepository skillRepository, EmployeeRepository employeeRepository,
-                             EmployeeSkillRepository employeeSkillRepository) {
+    public EmployeeSkillQueryService(SkillRepository skillRepository,
+                                     EmployeeSkillRepository employeeSkillRepository) {
         this.skillRepository = skillRepository;
         this.employeeSkillRepository = employeeSkillRepository;
-        this.employeeRepository = employeeRepository;
     }
 
     public Skill getSkillById(Long id) {
@@ -70,19 +67,39 @@ public class SkillQueryService {
         skillRepository.save(skill);
     }
 
-    public void deleteSkillById(Long id) {
+    public void saveEmployeeSkill(EmployeeSkill employeeSkill) {
+        employeeSkillRepository.save(employeeSkill);
+    }
+
+    public void deleteSkill(Long id) {
         skillRepository.deleteById(id);
+    }
+
+    public void deleteEmployeeSkill(Long id) {
+        employeeSkillRepository.deleteById(id);
     }
 
     public void deleteSkill(Skill skill) {
         skillRepository.delete(skill);
     }
 
+    public void deleteEmployeeSkill(EmployeeSkill employeeSkill) {
+        employeeSkillRepository.delete(employeeSkill);
+    }
+
     public void deleteAllSkill() {
         skillRepository.deleteAll();
     }
 
+    public void deleteAllEmployeeSkill() {
+        employeeSkillRepository.deleteAll();
+    }
+
     public void updateSkill(Skill skill) {
         skillRepository.save(skill);
+    }
+
+    public void updateEmployeeSkill(EmployeeSkill employeeSkill) {
+        employeeSkillRepository.save(employeeSkill);
     }
 }

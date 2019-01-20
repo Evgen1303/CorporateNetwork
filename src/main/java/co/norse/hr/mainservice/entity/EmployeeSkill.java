@@ -1,8 +1,5 @@
 package co.norse.hr.mainservice.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -13,15 +10,13 @@ public class EmployeeSkill {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "employee_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Employee employeeId;
+    private Employee employee;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @ManyToOne(optional = false)
     @JoinColumn(name = "skill_id")
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    private Skill skillId;
+    private Skill skill;
 
     @NotNull
     private int level;
@@ -30,20 +25,20 @@ public class EmployeeSkill {
         return id;
     }
 
-    public Employee getEmployeeId() {
-        return employeeId;
+    public Employee getEmployee() {
+        return employee;
     }
 
-    public void setEmployeeId(Employee employeeId) {
-        this.employeeId = employeeId;
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
     }
 
-    public Skill getSkillId() {
-        return skillId;
+    public Skill getSkill() {
+        return skill;
     }
 
-    public void setSkillId(Skill skillId) {
-        this.skillId = skillId;
+    public void setSkill(Skill skill) {
+        this.skill = skill;
     }
 
     public int getLevel() {
@@ -58,8 +53,8 @@ public class EmployeeSkill {
     public String toString() {
         return "EmployeeSkill{" +
                 "id=" + id +
-                ", employeeId=" + employeeId +
-                ", skillId=" + skillId +
+                ", employee=" + employee +
+                ", skill=" + skill +
                 ", level=" + level +
                 '}';
     }
