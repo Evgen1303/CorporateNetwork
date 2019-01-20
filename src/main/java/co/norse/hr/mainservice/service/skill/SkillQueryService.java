@@ -1,10 +1,13 @@
 package co.norse.hr.mainservice.service.skill;
 
 import co.norse.hr.mainservice.dto.SkillDTO;
+import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.entity.Skill;
 import co.norse.hr.mainservice.exception.ResourceNotFoundException;
 import co.norse.hr.mainservice.repositories.SkillRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -23,7 +26,10 @@ public class SkillQueryService {
 
     public Skill getSkillById(Long id) {
         Optional<Skill> skill = skillRepository.findById(id);
-        return skill.orElseThrow(ResourceNotFoundException::new);
+        if (!skill.isPresent()) {
+            throw new ResourceNotFoundException();
+        }
+        return skill.get();
     }
 
     public Iterable<Skill> getAllSkills() {
@@ -35,27 +41,28 @@ public class SkillQueryService {
         return skills;
     }
 
-    public void saveSkill(Skill skill) {
+    public Page<Skill> getPage(Pageable pageable) {
+        return skillRepository.findAll(pageable);
+    }
+
+    public Skill saveSkill(Skill skill) {
         skillRepository.save(skill);
+        return skill;
     }
 
     public void deleteSkill(Long id) {
         skillRepository.deleteById(id);
     }
 
-    public void deleteSkill(Skill skill) {
+   /* public void deleteSkill(Skill skill) {
         skillRepository.delete(skill);
-    }
-
-    public void deleteAllSkill() {
-        skillRepository.deleteAll();
-    }
+    }*/
 
     public Skill updateSkill(Long id, SkillDTO skillDTO) {
         Skill skill = skillConverterService.convertToEntity(skillDTO);
         skill.setId(id);
         skillRepository.save(skill);
-        return  skill;
+        return skill;
     }
 
 }
