@@ -5,6 +5,8 @@ import co.norse.hr.mainservice.entity.EmployeeProject;
 import co.norse.hr.mainservice.exception.EmployeeProjectNotFoundException;
 import co.norse.hr.mainservice.repositories.EmployeeProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -38,6 +40,10 @@ public class EmployeeProjectQueryService {
             throw new EmployeeProjectNotFoundException();
         }
         return result;
+    }
+
+    public Page<EmployeeProject> getPage(Pageable pageable) {
+        return employeeprojectRepository.findAll(pageable);
     }
 
     public void deleteEmployeeProjectById(Long id) {

@@ -3,8 +3,11 @@ package co.norse.hr.mainservice.service.project;
 import co.norse.hr.mainservice.dto.ProjectDto;
 import co.norse.hr.mainservice.entity.Project;
 import co.norse.hr.mainservice.exception.ProjectNotFoundException;
+import co.norse.hr.mainservice.exception.ResourceNotFoundException;
 import co.norse.hr.mainservice.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -36,8 +39,18 @@ public class ProjectQueryService {
     }
 
     public List<Project> getAllProjects() {
-        return projectRepository.findAll();
+        List<Project> projects = projectRepository.findAll();
+        if (!projects.iterator().hasNext()) {
+            throw new ResourceNotFoundException();
+        }
+        return projects;
+
     }
+
+    public Page<Project> getPage(Pageable pageable) {
+        return projectRepository.findAll(pageable);
+    }
+
 
     public void deleteProject(Long id) {
         projectRepository.deleteById(id);
