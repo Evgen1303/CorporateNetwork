@@ -2,7 +2,6 @@ package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.EmployeeSkillDTO;
 import co.norse.hr.mainservice.entity.EmployeeSkill;
-import co.norse.hr.mainservice.entity.Skill;
 import co.norse.hr.mainservice.service.empkoyeeskill.EmployeeSkillConverterService;
 import co.norse.hr.mainservice.service.empkoyeeskill.EmployeeSkillQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,8 +38,14 @@ public class EmployeeSkillController {
         return employeeSkillConverterService.convertToEntity(employeeSkillDTO);
     }
 
+    @DeleteMapping
+    public ResponseEntity<EmployeeSkill> deleteEmployeeSkill(@RequestBody EmployeeSkill employeeSkill) {
+        employeeSkillQueryService.deleteEmployeeSkill(employeeSkill);
+        return ResponseEntity.noContent().build();
+    }
+
     @DeleteMapping("/{id}")
-    public ResponseEntity<Skill> deleteEmployeeSkill(@PathVariable Long id) {
+    public ResponseEntity<EmployeeSkill> deleteEmployeeSkill(@PathVariable Long id) {
         employeeSkillQueryService.deleteEmployeeSkill(id);
         return ResponseEntity.noContent().build();
     }

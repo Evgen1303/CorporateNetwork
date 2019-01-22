@@ -9,6 +9,7 @@ public class SkillConverterService {
 
     public SkillDTO convertToDTO(Skill skill) {
         SkillDTO skillDTO = new SkillDTO();
+        skillDTO.setId(skill.getId());
         skillDTO.setName(skill.getName());
 
         return skillDTO;
@@ -16,6 +17,7 @@ public class SkillConverterService {
 
     public Skill convertToEntity(SkillDTO skillDTO) {
         Skill skill = new Skill();
+        skill.setId(skillDTO.getId());
         skill.setName(skillDTO.getName());
 
         return skill;

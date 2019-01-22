@@ -43,17 +43,14 @@ public class SkillQueryService {
         skillRepository.deleteById(id);
     }
 
-    public void deleteSkill(Skill skill) {
-        skillRepository.delete(skill);
-    }
+    public void deleteSkill(SkillDTO skillDTO) {
 
-    public void deleteAllSkill() {
-        skillRepository.deleteAll();
+        skillRepository.delete(skillConverterService.convertToEntity(skillDTO));
     }
 
     public Skill updateSkill(Long id, SkillDTO skillDTO) {
+        skillDTO.setId(id);
         Skill skill = skillConverterService.convertToEntity(skillDTO);
-        skill.setId(id);
         skillRepository.save(skill);
         return  skill;
     }
