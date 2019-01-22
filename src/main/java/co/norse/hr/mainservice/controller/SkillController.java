@@ -5,25 +5,38 @@ import co.norse.hr.mainservice.entity.Skill;
 import co.norse.hr.mainservice.service.skill.SkillConverterService;
 import co.norse.hr.mainservice.service.skill.SkillQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("skills")
 public class SkillController {
+    private static final int DEFAULT_PAGE_SIZE = 20;
+    private static final String DEFAULT_SORT_FIELD = "id";
 
     private SkillQueryService skillQueryService;
-    private SkillConverterService skillConverterService;
 
     @Autowired
-    public SkillController(SkillQueryService skillQueryService, SkillConverterService skillConverterService) {
+    public SkillController(SkillQueryService skillQueryService) {
         this.skillQueryService = skillQueryService;
-        this.skillConverterService = skillConverterService;
+    }
+
+    @GetMapping("get-all")
+    public Iterable<Skill> getAllSkills() {
+        return skillQueryService.getAllSkills();
     }
 
     @GetMapping
-    public Iterable<Skill> getAllSkills() {
-        return skillQueryService.getAllSkills();
+    public Page<Skill> getPages(
+            @PageableDefault(size = DEFAULT_PAGE_SIZE)
+            @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+                    Pageable pageable
+    ) {
+        return skillQueryService.getPage(pageable);
     }
 
     @GetMapping("/{id}")
@@ -33,8 +46,7 @@ public class SkillController {
 
     @PostMapping
     public Skill createSkill(@RequestBody SkillDTO skillDTO) {
-        skillQueryService.saveSkill(skillConverterService.convertToEntity(skillDTO));
-        return skillConverterService.convertToEntity(skillDTO);
+        return skillQueryService.saveSkill(skillDTO);
     }
 
     @DeleteMapping("/{id}")

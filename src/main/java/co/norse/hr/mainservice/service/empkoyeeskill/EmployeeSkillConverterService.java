@@ -22,6 +22,7 @@ public class EmployeeSkillConverterService {
 
     public EmployeeSkillDTO convertToDTO(EmployeeSkill employeeSkill) {
         EmployeeSkillDTO employeeSkillDTO = new EmployeeSkillDTO();
+        employeeSkillDTO.setId(employeeSkill.getId());
         employeeSkillDTO.setEmployeeId(employeeSkill.getEmployee().getId());
         employeeSkillDTO.setSkillId(employeeSkill.getSkill().getId());
         employeeSkillDTO.setLevel(employeeSkill.getLevel());
@@ -30,6 +31,7 @@ public class EmployeeSkillConverterService {
 
     public EmployeeSkill convertToEntity(EmployeeSkillDTO employeeSkillDTO) {
         EmployeeSkill employeeSkill = new EmployeeSkill();
+        employeeSkill.setId(employeeSkillDTO.getId());
         employeeSkill.setEmployee(employeeQueryService.getEmployeeById(employeeSkillDTO.getEmployeeId()));
         employeeSkill.setSkill(skillQueryService.getSkillById(employeeSkillDTO.getSkillId()));
         employeeSkill.setLevel(employeeSkillDTO.getLevel());
