@@ -47,6 +47,9 @@ public class EmployeeProjectQueryService {
     }
 
     public void deleteEmployeeProjectById(Long id) {
+        if (!employeeprojectRepository.findById(id).isPresent()) {
+            throw new EmployeeProjectNotFoundException();
+        }
         employeeprojectRepository.deleteById(id);
     }
 

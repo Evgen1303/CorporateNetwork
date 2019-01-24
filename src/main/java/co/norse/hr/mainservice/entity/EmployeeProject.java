@@ -13,7 +13,7 @@ public class EmployeeProject {
     @JoinColumn(name = "employee_ld", nullable = false)
     private Employee employee;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "project_ld", nullable = false)
     private Project project;
 

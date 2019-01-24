@@ -48,12 +48,17 @@ public class ProjectQueryService {
     }
 
     public Page<Project> getPage(Pageable pageable) {
+        if (!projectRepository.findAll(pageable).iterator().hasNext()) {
+            throw new ResourceNotFoundException();
+        }
         return projectRepository.findAll(pageable);
     }
 
 
     public void deleteProject(Long id) {
-        projectRepository.deleteById(id);
+        if (!projectRepository.findById(id).isPresent()) {
+            throw new ProjectNotFoundException();
+        } else projectRepository.deleteById(id);
     }
 
 
