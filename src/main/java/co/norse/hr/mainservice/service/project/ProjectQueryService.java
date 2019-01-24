@@ -57,19 +57,26 @@ public class ProjectQueryService {
     }
 
 
-    public void updateProject(Project project) {
+    public Project updateProject(Long id, ProjectDto projectDto) {
+        Project project = projectConverterService.convertToEntity(projectDto);
+        project.setId(id);
         projectRepository.save(project);
+        return project;
     }
 
-    public void patchProject(ProjectDto projectDto, Long id) {
+
+    public Project patchProject(Long id, ProjectDto projectDto) {
+        Project project = projectConverterService.convertToEntity(projectDto);
         ProjectDto oldProjectDto = projectConverterService.convertToDto(this.getProjectById(id));
-        if (projectDto.getDescription().length() == 0) {
-            projectDto.setDescription(oldProjectDto.getDescription());
+        project.setId(id);
+        if (project.getDescription() == null) {
+            project.setDescription(oldProjectDto.getDescription());
         }
-        if (projectDto.getName().length() == 0) {
-            projectDto.setName(oldProjectDto.getName());
+        if (project.getName() == null) {
+            project.setName(oldProjectDto.getName());
         }
-        this.updateProject(projectConverterService.convertToEntity(projectDto));
+        projectRepository.save(project);
+        return project;
     }
 
     public Project findOneOrThrowException(Long id) {

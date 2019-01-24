@@ -50,28 +50,35 @@ public class EmployeeProjectQueryService {
         employeeprojectRepository.deleteById(id);
     }
 
-    public void updateEmployeeProject(EmployeeProject employeeProject) {
+    public EmployeeProject updateEmployeeProject(Long id, EmployeeProjectDto employeeProjectDto) {
+        EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
+        employeeProject.setId(id);
         employeeprojectRepository.save(employeeProject);
+        return employeeProject;
     }
 
-    public void patchEmployeeProject(EmployeeProjectDto employeeProjectDto, Long id) {
+    public EmployeeProject patchEmployeeProject(Long id, EmployeeProjectDto employeeProjectDto) {
         EmployeeProjectDto oldEmployeeProjectDto = employeeProjectConverterService.convertToDto(this.getEmployeeProjectById(id));
-        if (employeeProjectDto.getProject() == 0) {
-            employeeProjectDto.setProject(oldEmployeeProjectDto.getProject());
-        }
-        if (employeeProjectDto.getEmployee() == 0) {
+        employeeProjectDto.setId(id);
+        if (employeeProjectDto.getEmployee() == null) {
             employeeProjectDto.setEmployee(oldEmployeeProjectDto.getEmployee());
         }
-        if (employeeProjectDto.getPosition().length() == 0) {
-            employeeProjectDto.setPosition(oldEmployeeProjectDto.getPosition());
-        }
-        if (employeeProjectDto.getStart() == 0) {
-            employeeProjectDto.setStart(oldEmployeeProjectDto.getStart());
+        if (employeeProjectDto.getProject() == null) {
+            employeeProjectDto.setProject(oldEmployeeProjectDto.getProject());
         }
         if (employeeProjectDto.getEnd() == 0) {
             employeeProjectDto.setEnd(oldEmployeeProjectDto.getEnd());
         }
-        this.updateEmployeeProject(employeeProjectConverterService.convertToEntity(employeeProjectDto));
+        if (employeeProjectDto.getStart() == 0) {
+            employeeProjectDto.setStart(oldEmployeeProjectDto.getStart());
+        }
+        if (employeeProjectDto.getPosition() == null) {
+            employeeProjectDto.setPosition(oldEmployeeProjectDto.getPosition());
+        }
+        EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
+        employeeProject.setId(id);
+        employeeprojectRepository.save(employeeProject);
+        return employeeProject;
     }
 
 }

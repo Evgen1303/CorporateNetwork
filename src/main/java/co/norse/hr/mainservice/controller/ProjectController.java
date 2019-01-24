@@ -18,7 +18,7 @@ import java.util.List;
 @RequestMapping("projects")
 public class ProjectController {
     private static final int DEFAULT_PAGE_SIZE = 20;
-    private static final String DEFAULT_SORT_FIELD = "level";
+    private static final String DEFAULT_SORT_FIELD = "id";
 
     private ProjectQueryService projectQueryService;
     private ProjectConverterService projectConverterService;
@@ -62,16 +62,12 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Project> updateProjectPut(@PathVariable Long id,
-                                                    @RequestBody ProjectDto projectDto) {
-        Project project = projectConverterService.convertToEntity(projectDto);
-        projectQueryService.updateProject(project);
-        return ResponseEntity.ok(project);
+    public ResponseEntity<Project> putProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
+        return ResponseEntity.ok(projectQueryService.updateProject(id, projectDto));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Project> patchProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
-        projectQueryService.patchProject(projectDto, id);
-        return ResponseEntity.ok(projectConverterService.convertToEntity(projectDto));
+        return ResponseEntity.ok(projectQueryService.patchProject(id, projectDto));
     }
 }

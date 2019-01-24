@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("employeeprojects")
 public class EmployeeProjectController {
     private static final int DEFAULT_PAGE_SIZE = 20;
-    private static final String DEFAULT_SORT_FIELD = "level";
+    private static final String DEFAULT_SORT_FIELD = "id";
 
     private EmployeeProjectQueryService employeeProjectQueryService;
     private EmployeeProjectConverterService employeeProjectConverterService;
@@ -60,17 +60,13 @@ public class EmployeeProjectController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public ResponseEntity<EmployeeProject> updateEmployeeProjectPut(@RequestParam Long id,
-                                                                    @RequestBody EmployeeProjectDto employeeProjectDto) {
-        EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
-        employeeProjectQueryService.updateEmployeeProject(employeeProject);
-        return ResponseEntity.ok(employeeProject);
+    @PutMapping("/{id}")
+    public ResponseEntity<EmployeeProject> putEmployeeProject(@PathVariable Long id, @RequestBody EmployeeProjectDto employeeProjectDto) {
+        return ResponseEntity.ok(employeeProjectQueryService.updateEmployeeProject(id, employeeProjectDto));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<EmployeeProject> patchProject(@PathVariable Long id, @RequestBody EmployeeProjectDto employeeProjectDto) {
-        employeeProjectQueryService.patchEmployeeProject(employeeProjectDto, id);
-        return ResponseEntity.ok(employeeProjectConverterService.convertToEntity(employeeProjectDto));
+        return ResponseEntity.ok(employeeProjectQueryService.patchEmployeeProject(id, employeeProjectDto));
     }
 }

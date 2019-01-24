@@ -2,6 +2,7 @@ package co.norse.hr.mainservice.dto;
 
 public class EmployeeProjectDto {
 
+    private Long id;
     private Long employee;
     private Long project;
 
@@ -58,5 +59,13 @@ public class EmployeeProjectDto {
 
     public void setEnd(int end) {
         this.end = end;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }
