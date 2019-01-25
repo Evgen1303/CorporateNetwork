@@ -1,59 +1,81 @@
 package co.norse.hr.mainservice.controller;
 
+import co.norse.hr.mainservice.dto.EmployeeSkillDTO;
 import co.norse.hr.mainservice.entity.EmployeeSkill;
-import co.norse.hr.mainservice.entity.Skill;
-import co.norse.hr.mainservice.service.EmployeeSkillQueryService;
+import co.norse.hr.mainservice.service.empkoyeeskill.EmployeeSkillConverterService;
+import co.norse.hr.mainservice.service.empkoyeeskill.EmployeeSkillQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("employee_skills")
+@RequestMapping("employee-skills")
 public class EmployeeSkillController {
+    private static final int DEFAULT_PAGE_SIZE = 20;
+    private static final String DEFAULT_SORT_FIELD = "level";
 
-    private EmployeeSkillQueryService skillQueryService;
+    private EmployeeSkillQueryService employeeSkillQueryService;
+    private EmployeeSkillConverterService employeeSkillConverterService;
 
     @Autowired
-    public EmployeeSkillController(EmployeeSkillQueryService employeeSkillQueryService) {
-        this.skillQueryService = employeeSkillQueryService;
+    public EmployeeSkillController(EmployeeSkillQueryService employeeSkillQueryService,
+                                   EmployeeSkillConverterService employeeSkillConverterService) {
+        this.employeeSkillQueryService = employeeSkillQueryService;
+        this.employeeSkillConverterService = employeeSkillConverterService;
+    }
+
+    @GetMapping("get-all")
+    public Iterable<EmployeeSkill> getAllEmployeeSkills() {
+        return employeeSkillQueryService.getAllEmployeeSkills();
     }
 
     @GetMapping
-    public Iterable<EmployeeSkill> getAllEmployeeSkills() {
-        return skillQueryService.getAllEmployeeSkills();
+    public Page<EmployeeSkill> getPages(
+            @PageableDefault(size = DEFAULT_PAGE_SIZE)
+            @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+                    Pageable pageable
+    ) {
+        return employeeSkillQueryService.getPage(pageable);
     }
 
-    @GetMapping("skill_list")
-    public Iterable<Skill> getAllSkills() {
-        return skillQueryService.getAllSkills();
-    }
-
-    @GetMapping("e/{employeeId}")
-    public EmployeeSkill getEmployeeSkills(@PathVariable Long employeeId) {
-        return skillQueryService.getEmployeeSkillById(employeeId);
-    }
-
-    @GetMapping("s/{id}")
-    public Skill getSkill(@PathVariable Long id) {
-        return skillQueryService.getSkillById(id);
+    @GetMapping("/{id}")
+    public EmployeeSkill getEmployeeSkills(@PathVariable Long id) {
+        return employeeSkillQueryService.getEmployeeSkillById(id);
     }
 
     @PostMapping
-    public Skill createSkill(@RequestBody Skill skill) {
-        skillQueryService.saveSkill(skill);
-        return skill;
+    public EmployeeSkill createSkill(@RequestBody EmployeeSkillDTO employeeSkillDTO) {
+        return employeeSkillQueryService.saveEmployeeSkill(employeeSkillDTO);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Skill> deleteSkill(@PathVariable Long id) {
-        skillQueryService.deleteSkill(id);
+    @DeleteMapping
+    public ResponseEntity<EmployeeSkill> deleteEmployeeSkill(@RequestBody EmployeeSkillDTO employeeSkillDTO) {
+        employeeSkillQueryService.deleteEmployeeSkill(employeeSkillDTO);
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
-    public ResponseEntity<Skill> updateSkillPut(@RequestBody Skill skill) {
-        skillQueryService.updateSkill(skill);
-        return ResponseEntity.ok(skill);
+    @DeleteMapping("/{id}")
+    public ResponseEntity<EmployeeSkill> deleteEmployeeSkill(@PathVariable Long id) {
+        employeeSkillQueryService.deleteEmployeeSkill(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<EmployeeSkill> putSkill(@PathVariable Long id, @RequestBody EmployeeSkillDTO employeeSkillDTO) {
+        return ResponseEntity.ok(employeeSkillQueryService.updateEmployeeSkill(id, employeeSkillDTO));
+    }
+
+
+    @PatchMapping("/{id}")
+    public ResponseEntity<EmployeeSkill> patchEmployeeSkill(@PathVariable Long id,
+                                                            @RequestBody EmployeeSkillDTO employeeSkillDTO) {
+        employeeSkillQueryService.patchEmployeeSkill(id, employeeSkillDTO);
+
+        return ResponseEntity.ok(employeeSkillConverterService.convertToEntity(employeeSkillDTO));
     }
 
 }

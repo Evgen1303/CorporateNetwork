@@ -1,7 +1,5 @@
 package co.norse.hr.mainservice.dto;
 
-import java.io.Serializable;
-
 public class EmployeeDto {
     private Long companyId;
     private String firstName;

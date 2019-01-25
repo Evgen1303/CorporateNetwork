@@ -1,5 +1,8 @@
 package co.norse.hr.mainservice.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
@@ -12,10 +15,12 @@ public class EmployeeSkill {
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "employee_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Employee employee;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "skill_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Skill skill;
 
     @NotNull
@@ -23,6 +28,10 @@ public class EmployeeSkill {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Employee getEmployee() {

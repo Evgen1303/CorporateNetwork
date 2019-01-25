@@ -11,6 +11,10 @@ public class EmployeeSkillDTO {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getEmployeeId() {
         return employeeId;
     }
@@ -35,13 +39,4 @@ public class EmployeeSkillDTO {
         this.level = level;
     }
 
-    @Override
-    public String toString() {
-        return "EmployeeSkillDTO{" +
-                "id=" + id +
-                ", employeeId=" + employeeId +
-                ", skillId=" + skillId +
-                ", level=" + level +
-                '}';
-    }
 }
