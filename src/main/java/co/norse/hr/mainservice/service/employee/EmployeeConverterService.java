@@ -23,7 +23,6 @@ public class EmployeeConverterService {
         this.officeQueryService = officeQueryService;
     }
 
-
     public EmployeeDto convertToDto(Employee employee) {
         EmployeeDto dto = new EmployeeDto();
         dto.setBirthday(employee.getBirthday());

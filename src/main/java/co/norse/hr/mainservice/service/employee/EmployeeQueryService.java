@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @Service
@@ -92,5 +93,9 @@ public class EmployeeQueryService {
             employeeDto.setRoomNumber(oldEmployeeDto.getRoomNumber());
         }
         this.updateEmployee(employeeConverterService.convertToEntity(employeeDto));
+    }
+
+    public Employee findOneOrThrowException(Long id) {
+        return employeeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

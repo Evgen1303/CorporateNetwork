@@ -3,6 +3,7 @@ package co.norse.hr.mainservice.entity;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "employee")
 public class Employee {
 
     @Id
@@ -23,11 +24,19 @@ public class Employee {
     @JoinColumn(name = "office_id")
     private Office office;
 
+//    @ManyToMany(fetch = FetchType.LAZY,
+//            cascade = {
+//                    CascadeType.PERSIST,
+//                    CascadeType.MERGE
+//            },
+//            mappedBy = "employee")
+//    private Set<Project> projects = new HashSet<>();
+
     @Override
     public String toString() {
         return "Employee[" +
                 "id=" + id +
-//                ", companyId=" + company.toString() +
+                ", companyId=" + company.toString() +
                 ", firstName='" + firstName + ", " +
                 ", lastName='" + lastName + ", " +
                 ", birthday=" + birthday +
@@ -36,7 +45,7 @@ public class Employee {
                 ", roomNumber='" + roomNumber + ", " +
                 ", position='" + position + ", " +
                 ", description='" + description + ", " +
-//                ", officeId=" + office.toString() +
+                ", officeId=" + office.toString() +
                 ']';
     }
 
