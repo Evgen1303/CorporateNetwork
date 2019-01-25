@@ -14,13 +14,13 @@ public class EmployeeSkill {
     private Long id;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "employee_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private Employee employee;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "skill_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private Skill skill;
 
     @NotNull
