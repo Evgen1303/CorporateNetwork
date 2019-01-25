@@ -44,12 +44,14 @@ public class EmployeeProjectQueryService {
 
     public EmployeeProject updateEmployeeProject(Long id, EmployeeProjectDto employeeProjectDto) {
         EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
+        employeeProject.setId(id);
         employeeprojectRepository.save(employeeProject);
         return employeeProject;
     }
 
     public EmployeeProject patchEmployeeProject(Long id, EmployeeProjectDto employeeProjectDto) {
         EmployeeProjectDto oldEmployeeProjectDto = employeeProjectConverterService.convertToDto(this.getEmployeeProjectById(id));
+        oldEmployeeProjectDto.setId(id);
         if (employeeProjectDto.getEmployee() == null) {
             employeeProjectDto.setEmployee(oldEmployeeProjectDto.getEmployee());
         }
@@ -66,6 +68,7 @@ public class EmployeeProjectQueryService {
             employeeProjectDto.setPosition(oldEmployeeProjectDto.getPosition());
         }
         EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
+        employeeProject.setId(id);
         employeeprojectRepository.save(employeeProject);
         return employeeProject;
     }

@@ -37,11 +37,9 @@ public class ProjectQueryService {
         projectRepository.save(project);
     }
 
-
     public Page<Project> getPage(Pageable pageable) {
         return projectRepository.findAll(pageable);
     }
-
 
     public void deleteProject(Long id) {
         projectRepository.deleteById(id);
@@ -49,6 +47,7 @@ public class ProjectQueryService {
 
     public Project updateProject(Long id, ProjectDto projectDto) {
         Project project = projectConverterService.convertToEntity(projectDto);
+        project.setId(id);
         projectRepository.save(project);
         return project;
     }
@@ -56,12 +55,14 @@ public class ProjectQueryService {
     public Project patchProject(Long id, ProjectDto projectDto) {
         Project project = projectConverterService.convertToEntity(projectDto);
         ProjectDto oldProjectDto = projectConverterService.convertToDto(this.getProjectById(id));
+        oldProjectDto.setId(id);
         if (project.getDescription() == null) {
             project.setDescription(oldProjectDto.getDescription());
         }
         if (project.getName() == null) {
             project.setName(oldProjectDto.getName());
         }
+        project.setId(id);
         projectRepository.save(project);
         return project;
     }
