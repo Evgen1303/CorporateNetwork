@@ -69,13 +69,13 @@ public class EmployeeSkillController {
         return ResponseEntity.ok(employeeSkillQueryService.updateEmployeeSkill(id, employeeSkillDTO));
     }
 
-    //TODO PATCH
-    /*@PatchMapping("/{id}")
+
+    @PatchMapping("/{id}")
     public ResponseEntity<EmployeeSkill> patchEmployeeSkill(@PathVariable Long id,
                                                             @RequestBody EmployeeSkillDTO employeeSkillDTO) {
         employeeSkillQueryService.patchEmployeeSkill(id, employeeSkillDTO);
 
         return ResponseEntity.ok(employeeSkillConverterService.convertToEntity(employeeSkillDTO));
-    }*/
+    }
 
 }

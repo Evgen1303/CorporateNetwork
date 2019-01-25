@@ -67,8 +67,7 @@ public class EmployeeSkillQueryService {
         return employeeSkill;
     }
 
-    //TODO PATCH
-    /*public void patchEmployeeSkill(Long id, EmployeeSkillDTO employeeSkillDTO) {
+    public void patchEmployeeSkill(Long id, EmployeeSkillDTO employeeSkillDTO) {
         employeeSkillDTO.setId(id);
         EmployeeSkillDTO oldEmployeeSkill1DTO = employeeSkillConverterService.convertToDTO(this.getEmployeeSkillById(id));
         if (employeeSkillDTO.getEmployeeId() == null) {
@@ -82,6 +81,7 @@ public class EmployeeSkillQueryService {
         if (employeeSkillDTO.getLevel() == 0) {
             employeeSkillDTO.setLevel(oldEmployeeSkill1DTO.getLevel());
         }
-    }*/
+        this.saveEmployeeSkill(employeeSkillDTO);
+    }
 
 }
