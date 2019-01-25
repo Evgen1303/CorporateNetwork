@@ -2,7 +2,7 @@ package co.norse.hr.mainservice.service.empkoyeeskill;
 
 import co.norse.hr.mainservice.dto.EmployeeSkillDTO;
 import co.norse.hr.mainservice.entity.EmployeeSkill;
-import co.norse.hr.mainservice.service.EmployeeQueryService;
+import co.norse.hr.mainservice.service.employee.EmployeeQueryService;
 import co.norse.hr.mainservice.service.skill.SkillQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
