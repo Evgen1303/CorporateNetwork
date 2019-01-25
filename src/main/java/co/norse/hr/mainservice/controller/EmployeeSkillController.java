@@ -52,12 +52,6 @@ public class EmployeeSkillController {
         return employeeSkillQueryService.saveEmployeeSkill(employeeSkillDTO);
     }
 
-    @DeleteMapping
-    public ResponseEntity<EmployeeSkill> deleteEmployeeSkill(@RequestBody EmployeeSkillDTO employeeSkillDTO) {
-        employeeSkillQueryService.deleteEmployeeSkill(employeeSkillDTO);
-        return ResponseEntity.noContent().build();
-    }
-
     @DeleteMapping("/{id}")
     public ResponseEntity<EmployeeSkill> deleteEmployeeSkill(@PathVariable Long id) {
         employeeSkillQueryService.deleteEmployeeSkill(id);
