@@ -22,21 +22,19 @@ public class EmployeeProject {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Project project;
 
-    private  String position;
+    private String position;
     private int start;
     private int end;
 
-    public EmployeeProject(){}
-
     @Override
-    public String toString(){
+    public String toString() {
         return "Project[" +
                 "id=" + id +
                 ", employeeId=" + employee.toString() +
                 ", projectId=" + project.toString() +
-                ", position=" + position  +
-                ", start=" + start  +
-                ", end=" + end  +
+                ", position=" + position +
+                ", start=" + start +
+                ", end=" + end +
                 ']';
     }
 

@@ -9,11 +9,12 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("employeeprojects")
+@RequestMapping("employee-projects")
 public class EmployeeProjectController {
     private static final int DEFAULT_PAGE_SIZE = 20;
     private static final String DEFAULT_SORT_FIELD = "id";
@@ -25,11 +26,6 @@ public class EmployeeProjectController {
     public EmployeeProjectController(EmployeeProjectQueryService employeeProjectQueryService, EmployeeProjectConverterService employeeProjectConverterService) {
         this.employeeProjectQueryService = employeeProjectQueryService;
         this.employeeProjectConverterService = employeeProjectConverterService;
-    }
-
-    @GetMapping("/all")
-    public Iterable<EmployeeProject> getAllEmployeeProjects() {
-        return employeeProjectQueryService.getAllEmployeeProjects();
     }
 
     @GetMapping
@@ -48,6 +44,7 @@ public class EmployeeProjectController {
     }
 
     @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
     public EmployeeProject createEmployeeProject(@RequestBody EmployeeProjectDto employeeProjectDto) {
         EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
         employeeProjectQueryService.saveEmployeeProject(employeeProject);

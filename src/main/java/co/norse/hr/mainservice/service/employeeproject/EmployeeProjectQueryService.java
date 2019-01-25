@@ -34,35 +34,22 @@ public class EmployeeProjectQueryService {
         employeeprojectRepository.save(employeeProject);
     }
 
-    public Iterable<EmployeeProject> getAllEmployeeProjects() {
-        Iterable<EmployeeProject> result = employeeprojectRepository.findAll();
-        if (!result.iterator().hasNext()) {
-            throw new EmployeeProjectNotFoundException();
-        }
-        return result;
-    }
-
     public Page<EmployeeProject> getPage(Pageable pageable) {
         return employeeprojectRepository.findAll(pageable);
     }
 
     public void deleteEmployeeProjectById(Long id) {
-        if (!employeeprojectRepository.findById(id).isPresent()) {
-            throw new EmployeeProjectNotFoundException();
-        }
         employeeprojectRepository.deleteById(id);
     }
 
     public EmployeeProject updateEmployeeProject(Long id, EmployeeProjectDto employeeProjectDto) {
         EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
-        employeeProject.setId(id);
         employeeprojectRepository.save(employeeProject);
         return employeeProject;
     }
 
     public EmployeeProject patchEmployeeProject(Long id, EmployeeProjectDto employeeProjectDto) {
         EmployeeProjectDto oldEmployeeProjectDto = employeeProjectConverterService.convertToDto(this.getEmployeeProjectById(id));
-        employeeProjectDto.setId(id);
         if (employeeProjectDto.getEmployee() == null) {
             employeeProjectDto.setEmployee(oldEmployeeProjectDto.getEmployee());
         }
@@ -79,7 +66,6 @@ public class EmployeeProjectQueryService {
             employeeProjectDto.setPosition(oldEmployeeProjectDto.getPosition());
         }
         EmployeeProject employeeProject = employeeProjectConverterService.convertToEntity(employeeProjectDto);
-        employeeProject.setId(id);
         employeeprojectRepository.save(employeeProject);
         return employeeProject;
     }
