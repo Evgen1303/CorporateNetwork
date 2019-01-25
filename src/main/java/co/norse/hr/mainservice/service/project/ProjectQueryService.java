@@ -28,6 +28,7 @@ public class ProjectQueryService {
 
     public Project getProjectById(Long id) {
         Optional<Project> result = projectRepository.findById(id);
+
         if (!result.isPresent()) {
             throw new ProjectNotFoundException();
         }

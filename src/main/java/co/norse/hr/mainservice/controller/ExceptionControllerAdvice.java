@@ -15,17 +15,14 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
     protected ResponseEntity<AwesomeException> handleProjectNotFoundException() {
         return new ResponseEntity<>(new AwesomeException("No such Project"), HttpStatus.NOT_FOUND);
     }
-
     @ExceptionHandler(EmployeeProjectNotFoundException.class)
     protected ResponseEntity<AwesomeException> handleEmployeeProjectNotFoundException() {
         return new ResponseEntity<>(new AwesomeException("No such EmployeeProject"), HttpStatus.NOT_FOUND);
     }
-
     @ExceptionHandler(ResourceNotFoundException.class)
     protected ResponseEntity<AwesomeException> handleResourceNotFoundException() {
         return new ResponseEntity<>(new AwesomeException("No such resource"), HttpStatus.NOT_FOUND);
     }
-
     private static class AwesomeException {
         private String message;
 
@@ -41,7 +38,6 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
         public void setMessage(String message) {
             this.message = message;
         }
-
 
     }
 
