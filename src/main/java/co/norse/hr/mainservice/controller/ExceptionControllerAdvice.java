@@ -12,22 +12,23 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
     @ExceptionHandler(ProjectNotFoundException.class)
-    protected ResponseEntity<AwesomeException> handleProjectNotFoundException() {
-        return new ResponseEntity<>(new AwesomeException("No such Project"), HttpStatus.NOT_FOUND);
+    protected ResponseEntity<ExceptionMessage> handleProjectNotFoundException() {
+        return new ResponseEntity<>(new ExceptionMessage("No such Project"), HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(EmployeeProjectNotFoundException.class)
-    protected ResponseEntity<AwesomeException> handleEmployeeProjectNotFoundException() {
-        return new ResponseEntity<>(new AwesomeException("No such EmployeeProject"), HttpStatus.NOT_FOUND);
+    protected ResponseEntity<ExceptionMessage> handleEmployeeProjectNotFoundException() {
+        return new ResponseEntity<>(new ExceptionMessage("No such EmployeeProject"), HttpStatus.NOT_FOUND);
     }
     @ExceptionHandler(ResourceNotFoundException.class)
-    protected ResponseEntity<AwesomeException> handleResourceNotFoundException() {
-        return new ResponseEntity<>(new AwesomeException("No such resource"), HttpStatus.NOT_FOUND);
+    protected ResponseEntity<ExceptionMessage> handleResourceNotFoundException() {
+        return new ResponseEntity<>(new ExceptionMessage("No such resource"), HttpStatus.NOT_FOUND);
     }
-    private static class AwesomeException {
+
+    private static class ExceptionMessage {
         private String message;
 
         @Autowired
-        public AwesomeException(String message) {
+        public ExceptionMessage(String message) {
             this.message = message;
         }
 

@@ -3,7 +3,6 @@ package co.norse.hr.mainservice.service.project;
 import co.norse.hr.mainservice.dto.ProjectDto;
 import co.norse.hr.mainservice.entity.Project;
 import co.norse.hr.mainservice.exception.ProjectNotFoundException;
-import co.norse.hr.mainservice.exception.ResourceNotFoundException;
 import co.norse.hr.mainservice.repositories.ProjectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,29 +37,13 @@ public class ProjectQueryService {
         projectRepository.save(project);
     }
 
-    public List<Project> getAllProjects() {
-        List<Project> projects = projectRepository.findAll();
-        if (!projects.iterator().hasNext()) {
-            throw new ResourceNotFoundException();
-        }
-        return projects;
-
-    }
-
     public Page<Project> getPage(Pageable pageable) {
-        if (!projectRepository.findAll(pageable).iterator().hasNext()) {
-            throw new ResourceNotFoundException();
-        }
         return projectRepository.findAll(pageable);
     }
 
-
     public void deleteProject(Long id) {
-        if (!projectRepository.findById(id).isPresent()) {
-            throw new ProjectNotFoundException();
-        } else projectRepository.deleteById(id);
+        projectRepository.deleteById(id);
     }
-
 
     public Project updateProject(Long id, ProjectDto projectDto) {
         Project project = projectConverterService.convertToEntity(projectDto);
@@ -70,17 +52,17 @@ public class ProjectQueryService {
         return project;
     }
 
-
     public Project patchProject(Long id, ProjectDto projectDto) {
         Project project = projectConverterService.convertToEntity(projectDto);
         ProjectDto oldProjectDto = projectConverterService.convertToDto(this.getProjectById(id));
-        project.setId(id);
+        oldProjectDto.setId(id);
         if (project.getDescription() == null) {
             project.setDescription(oldProjectDto.getDescription());
         }
         if (project.getName() == null) {
             project.setName(oldProjectDto.getName());
         }
+        project.setId(id);
         projectRepository.save(project);
         return project;
     }

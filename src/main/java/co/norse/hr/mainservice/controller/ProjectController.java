@@ -9,10 +9,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("projects")
@@ -38,11 +37,6 @@ public class ProjectController {
         return projectQueryService.getPage(pageable);
     }
 
-    @GetMapping("/all")
-    public List<Project> getAllProjects() {
-        return projectQueryService.getAllProjects();
-    }
-
     @GetMapping("/{id}")
     public Project getProject(@PathVariable Long id) {
         return projectQueryService.getProjectById(id);
@@ -62,6 +56,7 @@ public class ProjectController {
     }
 
     @PutMapping("/{id}")
+    @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<Project> putProject(@PathVariable Long id, @RequestBody ProjectDto projectDto) {
         return ResponseEntity.ok(projectQueryService.updateProject(id, projectDto));
     }

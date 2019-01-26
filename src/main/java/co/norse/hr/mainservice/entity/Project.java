@@ -1,6 +1,7 @@
 package co.norse.hr.mainservice.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Project {
@@ -11,17 +12,20 @@ public class Project {
     private Long id;
     private String name;
     private String description;
-//
-//    @ManyToMany(cascade = CascadeType.ALL)
-//    @JoinTable(name = "employee_project2", joinColumns = @JoinColumn(name = "project_id", referencedColumnName = "id"),
-//            inverseJoinColumns = @JoinColumn(name = "employee_id",
-//            referencedColumnName = "id"))
-//    private Set<Employee> employees;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return Objects.equals(id, project.id) &&
+                Objects.equals(name, project.name) &&
+                Objects.equals(description, project.description);
+    }
 
-
-
-    public Project() {
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description);
     }
 
     @Override

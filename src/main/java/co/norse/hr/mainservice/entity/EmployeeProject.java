@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class EmployeeProject {
@@ -22,21 +23,37 @@ public class EmployeeProject {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Project project;
 
-    private  String position;
+    private String position;
     private int start;
     private int end;
 
-    public EmployeeProject(){}
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmployeeProject that = (EmployeeProject) o;
+        return start == that.start &&
+                end == that.end &&
+                Objects.equals(id, that.id) &&
+                Objects.equals(employee, that.employee) &&
+                Objects.equals(project, that.project) &&
+                Objects.equals(position, that.position);
+    }
 
     @Override
-    public String toString(){
+    public int hashCode() {
+        return Objects.hash(id, employee, project, position, start, end);
+    }
+
+    @Override
+    public String toString() {
         return "Project[" +
                 "id=" + id +
                 ", employeeId=" + employee.toString() +
                 ", projectId=" + project.toString() +
-                ", position=" + position  +
-                ", start=" + start  +
-                ", end=" + end  +
+                ", position=" + position +
+                ", start=" + start +
+                ", end=" + end +
                 ']';
     }
 
