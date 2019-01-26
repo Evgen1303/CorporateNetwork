@@ -1,6 +1,7 @@
 package co.norse.hr.mainservice.entity;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 public class Project {
@@ -11,6 +12,21 @@ public class Project {
     private Long id;
     private String name;
     private String description;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Project project = (Project) o;
+        return Objects.equals(id, project.id) &&
+                Objects.equals(name, project.name) &&
+                Objects.equals(description, project.description);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, description);
+    }
 
     @Override
     public String toString() {
