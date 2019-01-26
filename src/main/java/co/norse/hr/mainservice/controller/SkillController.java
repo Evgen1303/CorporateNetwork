@@ -55,12 +55,6 @@ public class SkillController {
         return ResponseEntity.noContent().build();
     }
 
-    @DeleteMapping
-    public ResponseEntity<Skill> deleteSkill(@RequestBody SkillDTO skillDTO) {
-        skillQueryService.deleteSkill(skillDTO);
-        return ResponseEntity.noContent().build();
-    }
-
     @PutMapping("/{id}")
     public ResponseEntity<Skill> putSkill(@PathVariable Long id, @RequestBody SkillDTO skillDTO) {
         return ResponseEntity.ok(skillQueryService.updateSkill(id, skillDTO));
