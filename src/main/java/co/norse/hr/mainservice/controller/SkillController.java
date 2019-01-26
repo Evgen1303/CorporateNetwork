@@ -24,12 +24,7 @@ public class SkillController {
     public SkillController(SkillQueryService skillQueryService) {
         this.skillQueryService = skillQueryService;
     }
-
-    @GetMapping("get-all")
-    public Iterable<Skill> getAllSkills() {
-        return skillQueryService.getAllSkills();
-    }
-
+    
     @GetMapping
     public Page<Skill> getPages(
             @PageableDefault(size = DEFAULT_PAGE_SIZE)

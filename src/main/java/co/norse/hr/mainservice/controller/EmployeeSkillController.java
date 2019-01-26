@@ -28,11 +28,6 @@ public class EmployeeSkillController {
         this.employeeSkillConverterService = employeeSkillConverterService;
     }
 
-    @GetMapping("get-all")
-    public Iterable<EmployeeSkill> getAllEmployeeSkills() {
-        return employeeSkillQueryService.getAllEmployeeSkills();
-    }
-
     @GetMapping
     public Page<EmployeeSkill> getPages(
             @PageableDefault(size = DEFAULT_PAGE_SIZE)

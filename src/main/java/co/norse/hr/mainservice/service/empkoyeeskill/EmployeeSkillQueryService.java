@@ -25,25 +25,10 @@ public class EmployeeSkillQueryService {
     }
 
     public EmployeeSkill getEmployeeSkillById(Long id) {
-
-        Optional<EmployeeSkill> employeeSkill = employeeSkillRepository.findById(id);
-        return employeeSkill.orElseThrow(ResourceNotFoundException::new);
-    }
-
-    public Iterable<EmployeeSkill> getAllEmployeeSkills() {
-
-        Iterable<EmployeeSkill> employeeSkills = employeeSkillRepository.findAll();
-
-        if (!employeeSkills.iterator().hasNext()) {
-            throw new ResourceNotFoundException();
-        }
-        return employeeSkills;
+        return employeeSkillRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     public Page<EmployeeSkill> getPage(Pageable pageable) {
-        if (!employeeSkillRepository.findAll(pageable).iterator().hasNext()) {
-            throw new ResourceNotFoundException();
-        }
         return employeeSkillRepository.findAll(pageable);
     }
 

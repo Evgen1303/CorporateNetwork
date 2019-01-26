@@ -24,26 +24,10 @@ public class SkillQueryService {
     }
 
     public Skill getSkillById(Long id) {
-        Optional<Skill> skill = skillRepository.findById(id);
-        if (!skill.isPresent()) {
-            throw new ResourceNotFoundException();
-        }
-        return skill.get();
-    }
-
-    public Iterable<Skill> getAllSkills() {
-
-        Iterable<Skill> skills = skillRepository.findAll();
-        if (!skills.iterator().hasNext()) {
-            throw new ResourceNotFoundException();
-        }
-        return skills;
+        return skillRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
     public Page<Skill> getPage(Pageable pageable) {
-        if (!skillRepository.findAll(pageable).iterator().hasNext()) {
-            throw new ResourceNotFoundException();
-        }
         return skillRepository.findAll(pageable);
     }
 
