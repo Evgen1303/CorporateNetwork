@@ -27,7 +27,7 @@ public class OfficeController {
         this.officeQueryService = officeQueryService;
     }
 
-    @PostMapping("/{id}")
+    @PostMapping
     public Office createOffice(@RequestBody OfficeDTO officeDTO) {
         Office office = officeConvertService.convertToEntity(officeDTO);
         officeQueryService.saveOffice(office);
@@ -61,6 +61,6 @@ public class OfficeController {
     @PatchMapping("/{id}")
     public ResponseEntity<Office> patchOffice(@PathVariable Long id, @RequestBody OfficeDTO officeDTO) {
         officeQueryService.patchOffice(officeDTO, id);
-        return ResponseEntity.ok(officeConvertService.convertToEntity(fficeDTO));
+        return ResponseEntity.ok(officeConvertService.convertToEntity(officeDTO));
     }
 }
