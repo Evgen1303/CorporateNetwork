@@ -28,6 +28,13 @@ public class CompanyController {
         this.companyQueryService = companyQueryService;
     }
 
+    @PostMapping
+    public Company createCompany(@RequestBody CompanyDTO companyDTO) {
+        Company company = companyConvertService.convertToEntity(companyDTO);
+        companyQueryService.saveCompany(company);
+        return company;
+    }
+
     @GetMapping
     public Page<Company> getPages(
             @PageableDefault(size = DEFAULT_PAGE_SIZE)
