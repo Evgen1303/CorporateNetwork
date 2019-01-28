@@ -9,7 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Service
 public class EmployeeSkillQueryService {
@@ -26,6 +26,14 @@ public class EmployeeSkillQueryService {
 
     public EmployeeSkill getEmployeeSkillById(Long id) {
         return employeeSkillRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    public List<EmployeeSkill> getAllSkillsByEmployeeId(Long id){
+        return employeeSkillRepository.findEmployeeSkillsByEmployeeId(id);
+    }
+
+    public List<EmployeeSkill> getAllEmployeesBySkillId(Long id){
+        return employeeSkillRepository.findEmployeeSkillsBySkillId(id);
     }
 
     public Page<EmployeeSkill> getPage(Pageable pageable) {

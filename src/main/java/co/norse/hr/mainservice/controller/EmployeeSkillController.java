@@ -12,6 +12,8 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("employee-skills")
 public class EmployeeSkillController {
@@ -36,6 +38,17 @@ public class EmployeeSkillController {
     ) {
         return employeeSkillQueryService.getPage(pageable);
     }
+
+    @GetMapping("/employee/{id}")
+    public List<EmployeeSkill> getAllSkillsByEmployeeId(@PathVariable Long id){
+        return employeeSkillQueryService.getAllSkillsByEmployeeId(id);
+    }
+
+    @GetMapping("/skill/{id}")
+    public List<EmployeeSkill> getAllEmployeesBySkillId(@PathVariable Long id){
+        return employeeSkillQueryService.getAllEmployeesBySkillId(id);
+    }
+
 
     @GetMapping("/{id}")
     public EmployeeSkill getEmployeeSkills(@PathVariable Long id) {
