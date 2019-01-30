@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -54,12 +55,9 @@ public class OfficeQueryService {
     public Page<Office> getPage(Pageable pageable){
         return officeRepository.findAll(pageable);
     }
-    public Iterable<Office> getAllOffices(){
-        Iterable<Office> offices= officeRepository.findAll();
-        if (!offices.iterator().hasNext()) {
-            throw new ResourceNotFoundException();
-        }
-        return offices;
+
+    public List<Office> getAllOffices(){
+        return officeRepository.findAll();
     }
 
     public void patchOffice(OfficeDTO officeDTO, Long id){
