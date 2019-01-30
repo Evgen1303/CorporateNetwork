@@ -9,8 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class EmployeeSkillQueryService {
 
@@ -33,7 +31,7 @@ public class EmployeeSkillQueryService {
     }
 
     public EmployeeSkill saveEmployeeSkill(EmployeeSkill employeeSkill) {
-        return employeeSkillRepository.save(employeeSkill);
+        return employeeSkillRepository.saveAndFlush(employeeSkill);
     }
 
     public void deleteEmployeeSkill(Long id) {
@@ -43,7 +41,7 @@ public class EmployeeSkillQueryService {
     public EmployeeSkill updateEmployeeSkill(Long id, EmployeeSkillDTO employeeSkillDTO) {
         employeeSkillDTO.setId(id);
         EmployeeSkill employeeSkill = employeeSkillConverterService.convertToEntity(employeeSkillDTO);
-        employeeSkillRepository.save(employeeSkill);
+        employeeSkillRepository.saveAndFlush(employeeSkill);
         return employeeSkill;
     }
 

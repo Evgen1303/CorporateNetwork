@@ -22,7 +22,7 @@ public class EmployeeSkillConverterService {
         this.skillQueryService = skillQueryService;
     }
 
-    public EmployeeSkillDTO convertToDTO(EmployeeSkill employeeSkill){
+    public EmployeeSkillDTO convertToDTO(EmployeeSkill employeeSkill) {
         return modelMapper.map(employeeSkill, EmployeeSkillDTO.class);
     }
 
