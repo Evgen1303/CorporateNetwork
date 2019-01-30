@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeSkillQueryService {
 
@@ -26,12 +28,20 @@ public class EmployeeSkillQueryService {
         return employeeSkillRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
+    public List<EmployeeSkill> getAllSkillsByEmployeeId(Long id) {
+        return employeeSkillRepository.findEmployeeSkillsByEmployeeId(id);
+    }
+
+    public List<EmployeeSkill> getAllEmployeesBySkillId(Long id) {
+        return employeeSkillRepository.findEmployeeSkillsBySkillId(id);
+    }
+
     public Page<EmployeeSkill> getPage(Pageable pageable) {
         return employeeSkillRepository.findAll(pageable);
     }
 
-    public EmployeeSkill saveEmployeeSkill(EmployeeSkill employeeSkill) {
-        return employeeSkillRepository.saveAndFlush(employeeSkill);
+    public EmployeeSkill saveEmployeeSkill(EmployeeSkillDTO employeeSkillDTO) {
+        return employeeSkillRepository.save(employeeSkillConverterService.convertToEntity(employeeSkillDTO));
     }
 
     public void deleteEmployeeSkill(Long id) {
@@ -41,11 +51,11 @@ public class EmployeeSkillQueryService {
     public EmployeeSkill updateEmployeeSkill(Long id, EmployeeSkillDTO employeeSkillDTO) {
         employeeSkillDTO.setId(id);
         EmployeeSkill employeeSkill = employeeSkillConverterService.convertToEntity(employeeSkillDTO);
-        employeeSkillRepository.saveAndFlush(employeeSkill);
+        employeeSkillRepository.save(employeeSkill);
         return employeeSkill;
     }
 
-    /*public void patchEmployeeSkill(Long id, EmployeeSkillDTO employeeSkillDTO) {
+    public void patchEmployeeSkill(Long id, EmployeeSkillDTO employeeSkillDTO) {
         employeeSkillDTO.setId(id);
         EmployeeSkillDTO oldEmployeeSkill1DTO = employeeSkillConverterService.convertToDTO(this.getEmployeeSkillById(id));
         if (employeeSkillDTO.getEmployeeId() == null) {
@@ -59,7 +69,7 @@ public class EmployeeSkillQueryService {
         if (employeeSkillDTO.getLevel() == 0) {
             employeeSkillDTO.setLevel(oldEmployeeSkill1DTO.getLevel());
         }
-        this.saveEmployeeSkill(employeeSkillConverterService.convertToEntity(employeeSkillDTO));
-    }*/
+        this.saveEmployeeSkill(employeeSkillDTO);
+    }
 
 }
