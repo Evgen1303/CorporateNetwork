@@ -32,8 +32,8 @@ public class EmployeeSkillQueryService {
         return employeeSkillRepository.findAll(pageable);
     }
 
-    public EmployeeSkill saveEmployeeSkill(EmployeeSkillDTO employeeSkillDTO) {
-        return employeeSkillRepository.save(employeeSkillConverterService.convertToEntity(employeeSkillDTO));
+    public EmployeeSkill saveEmployeeSkill(EmployeeSkill employeeSkill) {
+        return employeeSkillRepository.save(employeeSkill);
     }
 
     public void deleteEmployeeSkill(Long id) {
@@ -47,7 +47,7 @@ public class EmployeeSkillQueryService {
         return employeeSkill;
     }
 
-    public void patchEmployeeSkill(Long id, EmployeeSkillDTO employeeSkillDTO) {
+    /*public void patchEmployeeSkill(Long id, EmployeeSkillDTO employeeSkillDTO) {
         employeeSkillDTO.setId(id);
         EmployeeSkillDTO oldEmployeeSkill1DTO = employeeSkillConverterService.convertToDTO(this.getEmployeeSkillById(id));
         if (employeeSkillDTO.getEmployeeId() == null) {
@@ -61,7 +61,7 @@ public class EmployeeSkillQueryService {
         if (employeeSkillDTO.getLevel() == 0) {
             employeeSkillDTO.setLevel(oldEmployeeSkill1DTO.getLevel());
         }
-        this.saveEmployeeSkill(employeeSkillDTO);
-    }
+        this.saveEmployeeSkill(employeeSkillConverterService.convertToEntity(employeeSkillDTO));
+    }*/
 
 }

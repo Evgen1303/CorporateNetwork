@@ -43,8 +43,8 @@ public class EmployeeSkillController {
     }
 
     @PostMapping
-    public EmployeeSkill createSkill(@RequestBody EmployeeSkillDTO employeeSkillDTO) {
-        return employeeSkillQueryService.saveEmployeeSkill(employeeSkillDTO);
+    public EmployeeSkill createSkill(@RequestBody EmployeeSkill employeeSkill) {
+        return employeeSkillQueryService.saveEmployeeSkill(employeeSkill);
     }
 
     @DeleteMapping("/{id}")
@@ -59,12 +59,12 @@ public class EmployeeSkillController {
     }
 
 
-    @PatchMapping("/{id}")
+    /*@PatchMapping("/{id}")
     public ResponseEntity<EmployeeSkill> patchEmployeeSkill(@PathVariable Long id,
                                                             @RequestBody EmployeeSkillDTO employeeSkillDTO) {
         employeeSkillQueryService.patchEmployeeSkill(id, employeeSkillDTO);
 
         return ResponseEntity.ok(employeeSkillConverterService.convertToEntity(employeeSkillDTO));
-    }
+    }*/
 
 }

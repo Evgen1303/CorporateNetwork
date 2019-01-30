@@ -4,6 +4,7 @@ import co.norse.hr.mainservice.dto.EmployeeSkillDTO;
 import co.norse.hr.mainservice.entity.EmployeeSkill;
 import co.norse.hr.mainservice.service.employee.EmployeeQueryService;
 import co.norse.hr.mainservice.service.skill.SkillQueryService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,6 +13,7 @@ public class EmployeeSkillConverterService {
 
     private EmployeeQueryService employeeQueryService;
     private SkillQueryService skillQueryService;
+    private ModelMapper modelMapper = new ModelMapper();
 
     @Autowired
     public EmployeeSkillConverterService(EmployeeQueryService employeeQueryService,
@@ -20,21 +22,14 @@ public class EmployeeSkillConverterService {
         this.skillQueryService = skillQueryService;
     }
 
-    public EmployeeSkillDTO convertToDTO(EmployeeSkill employeeSkill) {
-        EmployeeSkillDTO employeeSkillDTO = new EmployeeSkillDTO();
-        employeeSkillDTO.setId(employeeSkill.getId());
-        employeeSkillDTO.setEmployeeId(employeeSkill.getEmployee().getId());
-        employeeSkillDTO.setSkillId(employeeSkill.getSkill().getId());
-        employeeSkillDTO.setLevel(employeeSkill.getLevel());
-        return employeeSkillDTO;
+    public EmployeeSkillDTO convertToDTO(EmployeeSkill employeeSkill){
+        return modelMapper.map(employeeSkill, EmployeeSkillDTO.class);
     }
 
     public EmployeeSkill convertToEntity(EmployeeSkillDTO employeeSkillDTO) {
-        EmployeeSkill employeeSkill = new EmployeeSkill();
-        employeeSkill.setId(employeeSkillDTO.getId());
+        EmployeeSkill employeeSkill = modelMapper.map(employeeSkillDTO, EmployeeSkill.class);
         employeeSkill.setEmployee(employeeQueryService.getEmployeeById(employeeSkillDTO.getEmployeeId()));
         employeeSkill.setSkill(skillQueryService.getSkillById(employeeSkillDTO.getSkillId()));
-        employeeSkill.setLevel(employeeSkillDTO.getLevel());
         return employeeSkill;
     }
 
