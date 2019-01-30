@@ -2,6 +2,7 @@ package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.SkillDTO;
 import co.norse.hr.mainservice.entity.Skill;
+import co.norse.hr.mainservice.service.skill.SkillConverterService;
 import co.norse.hr.mainservice.service.skill.SkillQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -18,10 +19,12 @@ public class SkillController {
     private static final String DEFAULT_SORT_FIELD = "id";
 
     private SkillQueryService skillQueryService;
+    private SkillConverterService skillConverterService;
 
     @Autowired
-    public SkillController(SkillQueryService skillQueryService) {
+    public SkillController(SkillQueryService skillQueryService, SkillConverterService skillConverterService) {
         this.skillQueryService = skillQueryService;
+        this.skillConverterService = skillConverterService;
     }
 
     @GetMapping
@@ -40,7 +43,7 @@ public class SkillController {
 
     @PostMapping
     public Skill createSkill(@RequestBody SkillDTO skillDTO) {
-        return skillQueryService.saveSkill(skillDTO);
+        return skillQueryService.saveSkill(skillConverterService.convertToEntity(skillDTO));
     }
 
     @DeleteMapping("/{id}")
@@ -51,6 +54,6 @@ public class SkillController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Skill> putSkill(@PathVariable Long id, @RequestBody SkillDTO skillDTO) {
-        return ResponseEntity.ok(skillQueryService.updateSkill(id, skillDTO));
+        return ResponseEntity.ok(skillQueryService.updateSkill(id, skillConverterService.convertToEntity(skillDTO)));
     }
 }
