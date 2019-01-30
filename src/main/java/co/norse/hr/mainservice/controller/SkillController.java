@@ -2,7 +2,6 @@ package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.SkillDTO;
 import co.norse.hr.mainservice.entity.Skill;
-import co.norse.hr.mainservice.service.skill.SkillConverterService;
 import co.norse.hr.mainservice.service.skill.SkillQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -24,7 +23,7 @@ public class SkillController {
     public SkillController(SkillQueryService skillQueryService) {
         this.skillQueryService = skillQueryService;
     }
-    
+
     @GetMapping
     public Page<Skill> getPages(
             @PageableDefault(size = DEFAULT_PAGE_SIZE)

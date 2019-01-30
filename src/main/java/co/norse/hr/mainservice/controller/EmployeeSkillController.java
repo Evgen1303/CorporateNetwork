@@ -40,12 +40,12 @@ public class EmployeeSkillController {
     }
 
     @GetMapping("/employee/{id}")
-    public List<EmployeeSkill> getAllSkillsByEmployeeId(@PathVariable Long id){
+    public List<EmployeeSkill> getAllSkillsByEmployeeId(@PathVariable Long id) {
         return employeeSkillQueryService.getAllSkillsByEmployeeId(id);
     }
 
     @GetMapping("/skill/{id}")
-    public List<EmployeeSkill> getAllEmployeesBySkillId(@PathVariable Long id){
+    public List<EmployeeSkill> getAllEmployeesBySkillId(@PathVariable Long id) {
         return employeeSkillQueryService.getAllEmployeesBySkillId(id);
     }
 

@@ -28,11 +28,11 @@ public class EmployeeSkillQueryService {
         return employeeSkillRepository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
 
-    public List<EmployeeSkill> getAllSkillsByEmployeeId(Long id){
+    public List<EmployeeSkill> getAllSkillsByEmployeeId(Long id) {
         return employeeSkillRepository.findEmployeeSkillsByEmployeeId(id);
     }
 
-    public List<EmployeeSkill> getAllEmployeesBySkillId(Long id){
+    public List<EmployeeSkill> getAllEmployeesBySkillId(Long id) {
         return employeeSkillRepository.findEmployeeSkillsBySkillId(id);
     }
 
