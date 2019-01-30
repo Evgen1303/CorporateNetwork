@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -60,12 +61,9 @@ public class CompanyQueryService {
         return companyRepository.findAll(pageable);
     }
 
-    public Iterable<Company> getAllCompanies() {
-        Iterable<Company> result = companyRepository.findAll();
-        if (!result.iterator().hasNext()) {
-            throw new ResourceNotFoundException();
-        }
-        return result;
+    public List<Company> getAllCompanies() {
+        return companyRepository.findAll();
+
     }
 
     public void patchCompany(CompanyDTO companyDTO, Long id) {
