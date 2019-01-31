@@ -2,6 +2,7 @@ package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.EmployeeSkillDTO;
 import co.norse.hr.mainservice.entity.EmployeeSkill;
+import co.norse.hr.mainservice.service.empkoyeeskill.EmployeeSkillCommandService;
 import co.norse.hr.mainservice.service.empkoyeeskill.EmployeeSkillConverterService;
 import co.norse.hr.mainservice.service.empkoyeeskill.EmployeeSkillQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +22,15 @@ public class EmployeeSkillController {
     private static final String DEFAULT_SORT_FIELD = "level";
 
     private EmployeeSkillQueryService employeeSkillQueryService;
+    private EmployeeSkillCommandService employeeSkillCommandService;
     private EmployeeSkillConverterService employeeSkillConverterService;
 
     @Autowired
     public EmployeeSkillController(EmployeeSkillQueryService employeeSkillQueryService,
+                                   EmployeeSkillCommandService employeeSkillCommandService,
                                    EmployeeSkillConverterService employeeSkillConverterService) {
         this.employeeSkillQueryService = employeeSkillQueryService;
+        this.employeeSkillCommandService = employeeSkillCommandService;
         this.employeeSkillConverterService = employeeSkillConverterService;
     }
 
@@ -57,18 +61,20 @@ public class EmployeeSkillController {
 
     @PostMapping
     public EmployeeSkill createSkill(@RequestBody EmployeeSkillDTO employeeSkillDTO) {
-        return employeeSkillQueryService.saveEmployeeSkill(employeeSkillDTO);
+        return employeeSkillCommandService.saveEmployeeSkill(
+                employeeSkillConverterService.convertToEntity(employeeSkillDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<EmployeeSkill> deleteEmployeeSkill(@PathVariable Long id) {
-        employeeSkillQueryService.deleteEmployeeSkill(id);
+        employeeSkillCommandService.deleteEmployeeSkill(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<EmployeeSkill> putSkill(@PathVariable Long id, @RequestBody EmployeeSkillDTO employeeSkillDTO) {
-        return ResponseEntity.ok(employeeSkillQueryService.updateEmployeeSkill(id, employeeSkillDTO));
+        return ResponseEntity.ok(employeeSkillCommandService.updateEmployeeSkill(id,
+                employeeSkillConverterService.convertToEntity(employeeSkillDTO)));
     }
 
 

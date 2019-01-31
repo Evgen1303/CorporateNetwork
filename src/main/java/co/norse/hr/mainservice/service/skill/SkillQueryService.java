@@ -26,18 +26,4 @@ public class SkillQueryService {
         return skillRepository.findAll(pageable);
     }
 
-    public Skill saveSkill(Skill skill) {
-        return skillRepository.saveAndFlush(skill);
-    }
-
-    public void deleteSkill(Long id) {
-        skillRepository.deleteById(id);
-    }
-
-    public Skill updateSkill(Long id, Skill skill) {
-        skill.setId(id);
-        skillRepository.saveAndFlush(skill);
-        return skill;
-    }
-
 }
