@@ -12,7 +12,7 @@ public class Office {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int city;
+    private String city;
 
     @Override
     public String toString() {
@@ -39,11 +39,11 @@ public class Office {
         this.name = name;
     }
 
-    public int getCity() {
+    public String getCity() {
         return city;
     }
 
-    public void setCity(int city) {
+    public void setCity(String city) {
         this.city = city;
     }
 }
