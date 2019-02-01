@@ -2,6 +2,7 @@ package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.OfficeDTO;
 import co.norse.hr.mainservice.entity.Office;
+import co.norse.hr.mainservice.service.office.OfficeCommandService;
 import co.norse.hr.mainservice.service.office.OfficeConvertService;
 import co.norse.hr.mainservice.service.office.OfficeQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,25 +21,28 @@ public class OfficeController {
 
     private OfficeConvertService officeConvertService;
     private OfficeQueryService officeQueryService;
+    private OfficeCommandService officeCommandService;
 
     @Autowired
-    public OfficeController(OfficeConvertService officeConvertService, OfficeQueryService officeQueryService) {
+    public OfficeController(OfficeConvertService officeConvertService, OfficeQueryService officeQueryService,
+                            OfficeCommandService officeCommandService) {
         this.officeConvertService = officeConvertService;
         this.officeQueryService = officeQueryService;
+        this.officeCommandService = officeCommandService;
     }
 
     @PostMapping
     public Office createOffice(@RequestBody OfficeDTO officeDTO) {
         Office office = officeConvertService.convertToEntity(officeDTO);
-        officeQueryService.saveOffice(office);
+        officeCommandService.saveOffice(office);
         return office;
     }
 
     @GetMapping
-    public Page<Office> getPages(@PageableDefault(size = DEFAULT_PAGE_SIZE)
-                                 @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
-                                         Pageable pageable) {
-        return officeQueryService.getPage(pageable);
+    public Page<Office> getOffices(@PageableDefault(size = DEFAULT_PAGE_SIZE)
+                                   @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+                                           Pageable pageable) {
+        return officeQueryService.getPages(pageable);
     }
 
     @GetMapping("/{id}")
@@ -48,19 +52,19 @@ public class OfficeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteOffice(@PathVariable Long id) {
-        officeQueryService.deleteOffice(id);
+        officeCommandService.deleteOffice(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Office> putOffice(@PathVariable Long id, @RequestBody OfficeDTO officeDTO) {
-        officeQueryService.updateOffice(officeDTO, id);
+        officeCommandService.updateOffice(officeDTO, id);
         return ResponseEntity.ok(officeConvertService.convertToEntity(officeDTO));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Office> patchOffice(@PathVariable Long id, @RequestBody OfficeDTO officeDTO) {
-        officeQueryService.patchOffice(officeDTO, id);
+        officeCommandService.patchOffice(officeDTO, id);
         return ResponseEntity.ok(officeConvertService.convertToEntity(officeDTO));
     }
 }
