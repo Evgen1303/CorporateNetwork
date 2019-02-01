@@ -2,6 +2,7 @@ package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.CompanyDTO;
 import co.norse.hr.mainservice.entity.Company;
+import co.norse.hr.mainservice.service.company.CompanyCommandService;
 import co.norse.hr.mainservice.service.company.CompanyConvertService;
 import co.norse.hr.mainservice.service.company.CompanyQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,22 +22,25 @@ public class CompanyController {
 
     private CompanyConvertService companyConvertService;
     private CompanyQueryService companyQueryService;
+    private CompanyCommandService companyCommandService;
 
     @Autowired
-    public CompanyController(CompanyConvertService companyConvertService, CompanyQueryService companyQueryService) {
+    public CompanyController(CompanyConvertService companyConvertService, CompanyQueryService companyQueryService,
+                             CompanyCommandService companyCommandService) {
         this.companyConvertService = companyConvertService;
         this.companyQueryService = companyQueryService;
+        this.companyCommandService = companyCommandService;
     }
 
     @PostMapping
     public Company createCompany(@RequestBody CompanyDTO companyDTO) {
         Company company = companyConvertService.convertToEntity(companyDTO);
-        companyQueryService.saveCompany(company);
+        companyCommandService.saveCompany(company);
         return company;
     }
 
     @GetMapping
-    public Page<Company> getPages(
+    public Page<Company> getAllCompanies(
             @PageableDefault(size = DEFAULT_PAGE_SIZE)
             @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
                     Pageable pageable) {
@@ -51,7 +55,7 @@ public class CompanyController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteCompany(@PathVariable Long id) {
-        companyQueryService.deleteCompany(id);
+        companyCommandService.deleteCompany(id);
         return ResponseEntity.noContent().build();
     }
 
@@ -59,14 +63,14 @@ public class CompanyController {
     @ResponseStatus(value = HttpStatus.CREATED)
     public ResponseEntity<Company> putCompany(@PathVariable Long id,
                                               @RequestBody CompanyDTO companyDTO) {
-        companyQueryService.updateCompany(companyDTO, id);
+        companyCommandService.updateCompany(companyDTO, id);
         return ResponseEntity.ok(companyConvertService.convertToEntity(companyDTO));
     }
 
     @PatchMapping("/{id}")
     public ResponseEntity<Company> patchCompany(@PathVariable Long id,
                                                 @RequestBody CompanyDTO companyDTO) {
-        companyQueryService.patchCompany(companyDTO, id);
+        companyCommandService.patchCompany(companyDTO, id);
         return ResponseEntity.ok(companyConvertService.convertToEntity(companyDTO));
     }
 }

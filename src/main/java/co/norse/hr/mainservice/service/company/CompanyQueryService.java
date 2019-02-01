@@ -1,6 +1,5 @@
 package co.norse.hr.mainservice.service.company;
 
-import co.norse.hr.mainservice.dto.CompanyDTO;
 import co.norse.hr.mainservice.entity.Company;
 import co.norse.hr.mainservice.exception.ResourceNotFoundException;
 import co.norse.hr.mainservice.repositories.CompanyRepository;
@@ -34,29 +33,6 @@ public class CompanyQueryService {
         return result.orElseThrow(ResourceNotFoundException::new);
     }
 
-    public void saveCompany(Company company) {
-        companyRepository.save(company);
-    }
-
-    public void deleteCompany(Long id) {
-        companyRepository.deleteById(id);
-    }
-
-    public void deleteAllCompanies() {
-        companyRepository.deleteAll();
-    }
-
-    public void deleteCompany(Company company) {
-        companyRepository.delete(company);
-    }
-
-    public Company updateCompany(CompanyDTO companyDTO, Long id) {
-        Company company = companyConvertService.convertToEntity(companyDTO);
-        company.setId(id);
-        this.saveCompany(company);
-        return company;
-    }
-
     public Page<Company> getPage(Pageable pageable) {
         return companyRepository.findAll(pageable);
     }
@@ -64,13 +40,5 @@ public class CompanyQueryService {
     public List<Company> getAllCompanies() {
         return companyRepository.findAll();
 
-    }
-
-    public void patchCompany(CompanyDTO companyDTO, Long id) {
-        CompanyDTO oldcompanyDTO = companyConvertService.convertToDTO(this.getCompanyById(id));
-        if (companyDTO.getName() == null) {
-            companyDTO.setName(oldcompanyDTO.getName());
-        }
-        this.updateCompany(companyDTO, id);
     }
 }
