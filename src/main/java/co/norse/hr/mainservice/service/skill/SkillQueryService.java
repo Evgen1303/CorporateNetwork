@@ -1,6 +1,5 @@
 package co.norse.hr.mainservice.service.skill;
 
-import co.norse.hr.mainservice.dto.SkillDTO;
 import co.norse.hr.mainservice.entity.Skill;
 import co.norse.hr.mainservice.exception.ResourceNotFoundException;
 import co.norse.hr.mainservice.repositories.SkillRepository;
@@ -9,18 +8,14 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class SkillQueryService {
 
     private SkillRepository skillRepository;
-    private SkillConverterService skillConverterService;
 
     @Autowired
-    public SkillQueryService(SkillRepository skillRepository, SkillConverterService skillConverterService) {
+    public SkillQueryService(SkillRepository skillRepository) {
         this.skillRepository = skillRepository;
-        this.skillConverterService = skillConverterService;
     }
 
     public Skill getSkillById(Long id) {
@@ -31,18 +26,17 @@ public class SkillQueryService {
         return skillRepository.findAll(pageable);
     }
 
-    public Skill saveSkill(SkillDTO skillDTO) {
-        return skillRepository.save(skillConverterService.convertToEntity(skillDTO));
+    public Skill saveSkill(Skill skill) {
+        return skillRepository.saveAndFlush(skill);
     }
 
     public void deleteSkill(Long id) {
         skillRepository.deleteById(id);
     }
 
-    public Skill updateSkill(Long id, SkillDTO skillDTO) {
-        Skill skill = skillConverterService.convertToEntity(skillDTO);
+    public Skill updateSkill(Long id, Skill skill) {
         skill.setId(id);
-        skillRepository.save(skill);
+        skillRepository.saveAndFlush(skill);
         return skill;
     }
 

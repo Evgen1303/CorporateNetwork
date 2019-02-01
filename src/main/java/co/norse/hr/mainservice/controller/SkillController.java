@@ -19,12 +19,14 @@ public class SkillController {
     private static final String DEFAULT_SORT_FIELD = "id";
 
     private SkillQueryService skillQueryService;
+    private SkillConverterService skillConverterService;
 
     @Autowired
-    public SkillController(SkillQueryService skillQueryService) {
+    public SkillController(SkillQueryService skillQueryService, SkillConverterService skillConverterService) {
         this.skillQueryService = skillQueryService;
+        this.skillConverterService = skillConverterService;
     }
-    
+
     @GetMapping
     public Page<Skill> getPages(
             @PageableDefault(size = DEFAULT_PAGE_SIZE)
@@ -41,7 +43,7 @@ public class SkillController {
 
     @PostMapping
     public Skill createSkill(@RequestBody SkillDTO skillDTO) {
-        return skillQueryService.saveSkill(skillDTO);
+        return skillQueryService.saveSkill(skillConverterService.convertToEntity(skillDTO));
     }
 
     @DeleteMapping("/{id}")
@@ -52,6 +54,6 @@ public class SkillController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Skill> putSkill(@PathVariable Long id, @RequestBody SkillDTO skillDTO) {
-        return ResponseEntity.ok(skillQueryService.updateSkill(id, skillDTO));
+        return ResponseEntity.ok(skillQueryService.updateSkill(id, skillConverterService.convertToEntity(skillDTO)));
     }
 }
