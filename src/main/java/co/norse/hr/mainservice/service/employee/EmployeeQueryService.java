@@ -2,14 +2,20 @@ package co.norse.hr.mainservice.service.employee;
 
 import co.norse.hr.mainservice.dto.EmployeeDto;
 import co.norse.hr.mainservice.entity.Employee;
+import co.norse.hr.mainservice.entity.EmployeeProject;
+import co.norse.hr.mainservice.entity.EmployeeSkill;
 import co.norse.hr.mainservice.exception.EmployeeNotFoundException;
 import co.norse.hr.mainservice.repositories.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
+import javax.persistence.criteria.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -97,5 +103,40 @@ public class EmployeeQueryService {
 
     public Employee findOneOrThrowException(Long id) {
         return employeeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    }
+
+    public Page<Employee> getAllEmployeebyFields(Pageable pageable, Long officeId, Long company, String position, int birthday, int room, Long project, Long skill) {
+        Specification<Employee> spec = new Specification<Employee>() {
+            @Override
+            public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
+                List<Predicate> predicates = new ArrayList<>();
+                if (officeId != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("office").get("id"), officeId)));
+                }
+                if (position.length() != 0) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("position"), position)));
+                }
+                if (company != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("company").get("id"), company)));
+                }
+                if (birthday != 0) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("birthday"), birthday)));
+                }
+                if (room != 0) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("room"), room)));
+                }
+                if (project != null) {
+                    Join<Employee, EmployeeProject> joinproject = root.join("employeeProjects", JoinType.INNER);
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(joinproject.get("project").get("id").as(String.class), project)));
+                }
+                if (skill != null) {
+                    Join<Employee, EmployeeSkill> joinskill = root.join("employeeSkills", JoinType.INNER);
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(joinskill.get("skill").get("id").as(String.class), skill)));
+                }
+                Predicate[] predicatesArray = new Predicate[predicates.size()];
+                return criteriaBuilder.and(predicates.toArray(predicatesArray));
+            }
+        };
+        return employeeRepository.findAll(spec, pageable);
     }
 }

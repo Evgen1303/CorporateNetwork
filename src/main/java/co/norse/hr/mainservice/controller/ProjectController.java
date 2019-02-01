@@ -45,7 +45,7 @@ public class ProjectController {
     }
 
     @GetMapping("/employee/{id}")
-    public List<Project> getProjectTest(@PathVariable Long id) {
+    public List<Project> getProjectsByEmployeeId(@PathVariable Long id) {
         return projectQueryService.getProjectByEmployeeId(id);
     }
 

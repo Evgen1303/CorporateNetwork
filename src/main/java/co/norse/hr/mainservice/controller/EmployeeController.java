@@ -68,4 +68,21 @@ public final class EmployeeController {
         return ResponseEntity.ok(employeeConverterService.convertToEntity(employeeDto));
     }
 
+    @GetMapping("/filter")
+    public Page<Employee> getPageTest(@PageableDefault(size = DEFAULT_PAGE_SIZE)
+                                      @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+                                              Pageable pageable,
+                                      @RequestParam("office") Long office,
+                                      @RequestParam("company") Long company,
+                                      @RequestParam("position") String position,
+                                      @RequestParam("birthday") int birthday,
+                                      @RequestParam("room") int room,
+                                      @RequestParam("project") Long project,
+                                      @RequestParam("skill") Long skill
+
+    ) {
+
+        return employeeQueryService.getAllEmployeebyFields(pageable, office, company, position, birthday, room, project, skill);
+    }
+
 }
