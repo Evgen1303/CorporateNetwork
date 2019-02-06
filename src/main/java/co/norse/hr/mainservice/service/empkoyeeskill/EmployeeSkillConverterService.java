@@ -14,23 +14,19 @@ public class EmployeeSkillConverterService {
     private EmployeeQueryService employeeQueryService;
     private SkillQueryService skillQueryService;
     private ModelMapper modelMapper = new ModelMapper();
-
     @Autowired
     public EmployeeSkillConverterService(EmployeeQueryService employeeQueryService,
                                          SkillQueryService skillQueryService) {
         this.employeeQueryService = employeeQueryService;
         this.skillQueryService = skillQueryService;
     }
-
     public EmployeeSkillDTO convertToDTO(EmployeeSkill employeeSkill) {
         return modelMapper.map(employeeSkill, EmployeeSkillDTO.class);
     }
-
     public EmployeeSkill convertToEntity(EmployeeSkillDTO employeeSkillDTO) {
         EmployeeSkill employeeSkill = modelMapper.map(employeeSkillDTO, EmployeeSkill.class);
         employeeSkill.setEmployee(employeeQueryService.getEmployeeById(employeeSkillDTO.getEmployeeId()));
         employeeSkill.setSkill(skillQueryService.getSkillById(employeeSkillDTO.getSkillId()));
         return employeeSkill;
     }
-
 }

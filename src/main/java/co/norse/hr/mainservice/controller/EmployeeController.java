@@ -1,6 +1,7 @@
 package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.EmployeeDto;
+import co.norse.hr.mainservice.dto.FilterDto;
 import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.service.employee.EmployeeConverterService;
 import co.norse.hr.mainservice.service.employee.EmployeeQueryService;
@@ -11,6 +12,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("employees")
@@ -71,18 +74,12 @@ public final class EmployeeController {
     @GetMapping("/filter")
     public Page<Employee> getPageTest(@PageableDefault(size = DEFAULT_PAGE_SIZE)
                                       @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
-                                              Pageable pageable,
-                                      @RequestParam("office") Long office,
-                                      @RequestParam("company") Long company,
-                                      @RequestParam("position") String position,
-                                      @RequestParam("birthday") int birthday,
-                                      @RequestParam("room") int room,
-                                      @RequestParam("project") Long project,
-                                      @RequestParam("skill") Long skill
-
-    ) {
-
-        return employeeQueryService.getAllEmployeebyFields(pageable, office, company, position, birthday, room, project, skill);
+                                              Pageable pageable, @RequestBody FilterDto filterDto) {
+        return employeeQueryService.getAllEmployeebyFields(pageable, filterDto);
     }
 
+    @GetMapping("/find/{name}")
+    public List<Employee> getEmployeeByNameOrLastname(@PathVariable String name) {
+        return employeeQueryService.findByNameOrLastname(name);
+    }
 }

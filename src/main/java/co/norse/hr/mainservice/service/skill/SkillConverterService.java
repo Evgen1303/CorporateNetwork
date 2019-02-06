@@ -17,5 +17,4 @@ public class SkillConverterService {
     public Skill convertToEntity(SkillDTO skillDTO) {
         return modelMapper.map(skillDTO, Skill.class);
     }
-
 }

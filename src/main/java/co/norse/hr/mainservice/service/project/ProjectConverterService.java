@@ -2,22 +2,21 @@ package co.norse.hr.mainservice.service.project;
 
 import co.norse.hr.mainservice.dto.ProjectDto;
 import co.norse.hr.mainservice.entity.Project;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectConverterService {
 
+
+    private ModelMapper modelMapper = new ModelMapper();
+
     public ProjectDto convertToDto(Project project) {
-        ProjectDto dto = new ProjectDto();
-        dto.setDescription(project.getDescription());
-        dto.setName(project.getName());
-        return dto;
+        return modelMapper.map(project, ProjectDto.class);
     }
 
     public Project convertToEntity(ProjectDto projectDto) {
-        Project project = new Project();
-        project.setDescription(projectDto.getDescription());
-        project.setName(projectDto.getName());
-        return project;
+        return modelMapper.map(projectDto, Project.class);
     }
+
 }
