@@ -1,6 +1,8 @@
 package co.norse.hr.mainservice.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "employee")
@@ -24,13 +26,14 @@ public class Employee {
     @JoinColumn(name = "office_id")
     private Office office;
 
-//    @ManyToMany(fetch = FetchType.LAZY,
-//            cascade = {
-//                    CascadeType.PERSIST,
-//                    CascadeType.MERGE
-//            },
-//            mappedBy = "employee")
-//    private Set<Project> projects = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "employee")
+    private Set<EmployeeProject> employeeProjects = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "employee")
+    private Set<EmployeeSkill> employeeSkills = new HashSet<>();
 
     @Override
     public String toString() {

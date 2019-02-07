@@ -13,6 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("projects")
 public class ProjectController {
@@ -40,6 +42,11 @@ public class ProjectController {
     @GetMapping("/{id}")
     public Project getProject(@PathVariable Long id) {
         return projectQueryService.getProjectById(id);
+    }
+
+    @GetMapping("/employee/{id}")
+    public List<Project> getProjectsByEmployeeId(@PathVariable Long id) {
+        return projectQueryService.getProjectByEmployeeId(id);
     }
 
     @PostMapping

@@ -1,6 +1,7 @@
 package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.EmployeeDto;
+import co.norse.hr.mainservice.dto.FilterDto;
 import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.service.employee.EmployeeConverterService;
 import co.norse.hr.mainservice.service.employee.EmployeeQueryService;
@@ -11,6 +12,8 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("employees")
@@ -66,6 +69,18 @@ public final class EmployeeController {
     public ResponseEntity<Employee> patchEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
         employeeQueryService.patchEmployee(employeeDto, id);
         return ResponseEntity.ok(employeeConverterService.convertToEntity(employeeDto));
+    }
+
+    @GetMapping("/filter")
+    public Page<Employee> getPageTest(@PageableDefault(size = DEFAULT_PAGE_SIZE)
+                                      @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
+                                              Pageable pageable, @RequestBody FilterDto filterDto) {
+        return employeeQueryService.getAllEmployeebyFields(pageable, filterDto);
+    }
+
+    @GetMapping("/find/{name}")
+    public List<Employee> getEmployeeByNameOrLastname(@PathVariable String name) {
+        return employeeQueryService.findByNameOrLastname(name);
     }
 
 }
