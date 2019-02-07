@@ -2,6 +2,7 @@ package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.SkillDTO;
 import co.norse.hr.mainservice.entity.Skill;
+import co.norse.hr.mainservice.service.skill.SkillCommandService;
 import co.norse.hr.mainservice.service.skill.SkillConverterService;
 import co.norse.hr.mainservice.service.skill.SkillQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,14 @@ public class SkillController {
     private static final String DEFAULT_SORT_FIELD = "id";
 
     private SkillQueryService skillQueryService;
+    private SkillCommandService skillCommandService;
     private SkillConverterService skillConverterService;
 
     @Autowired
-    public SkillController(SkillQueryService skillQueryService, SkillConverterService skillConverterService) {
+    public SkillController(SkillQueryService skillQueryService,
+                           SkillCommandService skillCommandService, SkillConverterService skillConverterService) {
         this.skillQueryService = skillQueryService;
+        this.skillCommandService = skillCommandService;
         this.skillConverterService = skillConverterService;
     }
 
@@ -43,17 +47,17 @@ public class SkillController {
 
     @PostMapping
     public Skill createSkill(@RequestBody SkillDTO skillDTO) {
-        return skillQueryService.saveSkill(skillConverterService.convertToEntity(skillDTO));
+        return skillCommandService.saveSkill(skillConverterService.convertToEntity(skillDTO));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Skill> deleteSkill(@PathVariable Long id) {
-        skillQueryService.deleteSkill(id);
+        skillCommandService.deleteSkill(id);
         return ResponseEntity.noContent().build();
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<Skill> putSkill(@PathVariable Long id, @RequestBody SkillDTO skillDTO) {
-        return ResponseEntity.ok(skillQueryService.updateSkill(id, skillConverterService.convertToEntity(skillDTO)));
+        return ResponseEntity.ok(skillCommandService.updateSkill(id, skillConverterService.convertToEntity(skillDTO)));
     }
 }
