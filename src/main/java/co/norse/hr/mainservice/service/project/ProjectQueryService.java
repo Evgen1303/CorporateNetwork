@@ -73,6 +73,6 @@ public class ProjectQueryService {
     }
 
     public List<Project> getProjectByEmployeeId(Long id) {
-        return projectRepository.findProjectsById(id);
+        return projectRepository.findByEmployeeProjects_EmployeeId(id);
     }
 }
