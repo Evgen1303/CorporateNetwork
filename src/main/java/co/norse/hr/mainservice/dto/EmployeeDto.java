@@ -1,16 +1,21 @@
 package co.norse.hr.mainservice.dto;
 
+import javax.validation.constraints.Email;
+
 public class EmployeeDto {
+
     private Long companyId;
     private String firstName;
     private String lastName;
     private int birthday;
+    @Email
     private String email;
     private String phone;
     private String roomNumber;
     private String position;
     private String description;
     private Long officeId;
+
 
     public Long getCompanyId() {
         return companyId;
@@ -91,4 +96,5 @@ public class EmployeeDto {
     public void setOfficeId(Long officeId) {
         this.officeId = officeId;
     }
+
 }

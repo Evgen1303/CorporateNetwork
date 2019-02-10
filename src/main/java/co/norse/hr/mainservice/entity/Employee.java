@@ -1,6 +1,7 @@
 package co.norse.hr.mainservice.entity;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -17,6 +18,7 @@ public class Employee {
     private String firstName;
     private String lastName;
     private int birthday;
+    @Email
     private String email;
     private String phone;
     private String roomNumber;
