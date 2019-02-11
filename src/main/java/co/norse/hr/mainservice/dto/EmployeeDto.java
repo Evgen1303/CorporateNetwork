@@ -1,14 +1,11 @@
 package co.norse.hr.mainservice.dto;
 
-import javax.validation.constraints.Email;
-
 public class EmployeeDto {
 
     private Long companyId;
     private String firstName;
     private String lastName;
     private int birthday;
-    @Email
     private String email;
     private String phone;
     private String roomNumber;

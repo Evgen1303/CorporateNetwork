@@ -13,7 +13,6 @@ import org.springframework.data.web.SortDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -46,7 +45,7 @@ public final class EmployeeController {
     }
 
     @PostMapping
-    public Employee createEmployee(@RequestBody @Valid EmployeeDto employeeDto) {
+    public Employee createEmployee(@RequestBody EmployeeDto employeeDto) {
         Employee employee = employeeConverterService.convertToEntity(employeeDto);
         employeeQueryService.saveEmployee(employee);
         return employee;
@@ -60,14 +59,14 @@ public final class EmployeeController {
 
     @PutMapping("/{id}")
     public ResponseEntity<Employee> putEmployee(@PathVariable Long id,
-                                                @RequestBody @Valid EmployeeDto employeeDto) {
+                                                @RequestBody EmployeeDto employeeDto) {
         Employee employee = employeeConverterService.convertToEntity(employeeDto);
         employeeQueryService.updateEmployee(employee);
         return ResponseEntity.ok(employee);
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Employee> patchEmployee(@PathVariable Long id, @RequestBody @Valid EmployeeDto employeeDto) {
+    public ResponseEntity<Employee> patchEmployee(@PathVariable Long id, @RequestBody EmployeeDto employeeDto) {
         employeeQueryService.patchEmployee(employeeDto, id);
         return ResponseEntity.ok(employeeConverterService.convertToEntity(employeeDto));
     }

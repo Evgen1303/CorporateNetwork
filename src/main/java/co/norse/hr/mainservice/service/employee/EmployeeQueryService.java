@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.*;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -35,7 +36,7 @@ public class EmployeeQueryService {
         return result.orElseThrow(EmployeeNotFoundException::new);
     }
 
-    public void saveEmployee(Employee employee) {
+    public void saveEmployee(@Valid Employee employee) {
         employeeRepository.save(employee);
     }
 
@@ -63,11 +64,11 @@ public class EmployeeQueryService {
         employeeRepository.deleteAll();
     }
 
-    public void updateEmployee(Employee employee) {
+    public void updateEmployee(@Valid Employee employee) {
         employeeRepository.save(employee);
     }
 
-    public void patchEmployee(EmployeeDto employeeDto, Long id) {
+    public void patchEmployee(@Valid EmployeeDto employeeDto, Long id) {
         EmployeeDto oldEmployeeDto = employeeConverterService.convertToDto(this.getEmployeeById(id));
         if (employeeDto.getBirthday() == 0) {
             employeeDto.setBirthday(oldEmployeeDto.getBirthday());

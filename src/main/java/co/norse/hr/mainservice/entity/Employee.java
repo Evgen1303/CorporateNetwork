@@ -1,5 +1,7 @@
 package co.norse.hr.mainservice.entity;
 
+import co.norse.hr.mainservice.annotation.Phone;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import java.util.HashSet;
@@ -18,8 +20,9 @@ public class Employee {
     private String firstName;
     private String lastName;
     private int birthday;
-    @Email
+    @Email(message = "Not suitable format for Email")
     private String email;
+    @Phone
     private String phone;
     private String roomNumber;
     private String position;
