@@ -1,5 +1,6 @@
 package co.norse.hr.mainservice.controller;
 
+import co.norse.hr.mainservice.exception.EmployeeNotFoundException;
 import co.norse.hr.mainservice.exception.EmployeeProjectNotFoundException;
 import co.norse.hr.mainservice.exception.ProjectNotFoundException;
 import co.norse.hr.mainservice.exception.ResourceNotFoundException;
@@ -24,6 +25,10 @@ public class ExceptionControllerAdvice extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(new ExceptionMessage("No such resource"), HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(EmployeeNotFoundException.class)
+    protected ResponseEntity<ExceptionMessage> handleEmployeeNotFoundException() {
+        return new ResponseEntity<>(new ExceptionMessage("No such Employee"), HttpStatus.NOT_FOUND);
+    }
     private static class ExceptionMessage {
         private String message;
 

@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import javax.persistence.criteria.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -37,14 +36,12 @@ public class EmployeeQueryService {
     }
 
     public void saveEmployee(@Valid Employee employee) {
+
         employeeRepository.save(employee);
     }
 
     public Iterable<Employee> getAllEmployees() {
         Iterable<Employee> result = employeeRepository.findAll();
-        if (!result.iterator().hasNext()) {
-            throw new EmployeeNotFoundException();
-        }
         return result;
     }
 
@@ -101,10 +98,6 @@ public class EmployeeQueryService {
             employeeDto.setRoomNumber(oldEmployeeDto.getRoomNumber());
         }
         this.updateEmployee(employeeConverterService.convertToEntity(employeeDto));
-    }
-
-    public Employee findOneOrThrowException(Long id) {
-        return employeeRepository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     public Page<Employee> getAllEmployeebyFields(Pageable pageable, FilterDto filterDto) {
