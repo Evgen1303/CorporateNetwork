@@ -1,7 +1,6 @@
 package co.norse.hr.mainservice.service.employee;
 
 import co.norse.hr.mainservice.dto.EmployeeDto;
-import co.norse.hr.mainservice.dto.FilterDto;
 import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.entity.EmployeeProject;
 import co.norse.hr.mainservice.entity.EmployeeSkill;
@@ -100,37 +99,44 @@ public class EmployeeQueryService {
         this.updateEmployee(employeeConverterService.convertToEntity(employeeDto));
     }
 
-    public Page<Employee> getAllEmployeebyFields(Pageable pageable, FilterDto filterDto) {
+    public Page<Employee> getAllEmployeebyFields(Pageable pageable, Long officeId, String position, Long companyId, Long birthday, String roomNumber, List<String> projects, List<String> skills) {
         Specification<Employee> spec = new Specification<Employee>() {
             @Override
             public Predicate toPredicate(Root<Employee> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
                 List<Predicate> predicates = new ArrayList<>();
-                if (filterDto.getOfficeId() != null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("office").get("id"), filterDto.getOfficeId())));
+                if (officeId != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("office").get("id"), officeId)));
                 }
-                if (filterDto.getPosition() != null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("position"), filterDto.getPosition())));
+
+                if (position != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("position"), position)));
                 }
-                if (filterDto.getCompanyId() != null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("company").get("id"), filterDto.getCompanyId())));
+
+                if (companyId != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("company").get("id"), companyId)));
                 }
-                if (filterDto.getBirthday() != 0) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("birthday"), filterDto.getBirthday())));
+
+                if (birthday != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("birthday"), birthday)));
                 }
-                if (filterDto.getRoomNumber() != null) {
-                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("roomNumber"), filterDto.getRoomNumber())));
+
+                if (roomNumber != null) {
+                    predicates.add(criteriaBuilder.and(criteriaBuilder.equal(root.get("roomNumber"), roomNumber)));
                 }
-                if (!filterDto.getProject().isEmpty()) {
-                    for (String temp : filterDto.getProject()) {
+
+                if (projects != null) {
+                    for (String temp : projects) {
                         Join<Employee, EmployeeProject> joinproject = root.join("employeeProjects", JoinType.INNER);
                         predicates.add(criteriaBuilder.and(criteriaBuilder.equal(joinproject.get("project").get("name"), temp)));
                     }
                 }
-                if (!filterDto.getSkill().isEmpty()) {
-                    for (String temp : filterDto.getProject()) {
+
+                if (skills != null) {
+                    for (String temp : skills) {
                         Join<Employee, EmployeeSkill> joinskill = root.join("employeeSkills", JoinType.INNER);
                         predicates.add(criteriaBuilder.and(criteriaBuilder.equal(joinskill.get("skill").get("id").as(String.class), temp)));
                     }
+
                 }
                 Predicate[] predicatesArray = new Predicate[predicates.size()];
                 return criteriaBuilder.and(predicates.toArray(predicatesArray));

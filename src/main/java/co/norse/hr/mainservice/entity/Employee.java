@@ -19,7 +19,7 @@ public class Employee {
     private Company company;
     private String firstName;
     private String lastName;
-    private int birthday;
+    private Long birthday;
     @Email(message = "Not suitable format for Email")
     private String email;
     @Phone
@@ -73,7 +73,7 @@ public class Employee {
         return lastName;
     }
 
-    public int getBirthday() {
+    public Long getBirthday() {
         return birthday;
     }
 
@@ -117,7 +117,7 @@ public class Employee {
         this.lastName = lastName;
     }
 
-    public void setBirthday(int birthday) {
+    public void setBirthday(Long birthday) {
         this.birthday = birthday;
     }
 
