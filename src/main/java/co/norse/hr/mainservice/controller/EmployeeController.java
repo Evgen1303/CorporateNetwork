@@ -82,5 +82,4 @@ public final class EmployeeController {
     public List<Employee> getEmployeeByNameOrLastname(@PathVariable String name) {
         return employeeQueryService.findByNameOrLastname(name);
     }
-
 }

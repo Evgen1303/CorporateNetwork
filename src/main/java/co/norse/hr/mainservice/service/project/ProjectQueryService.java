@@ -9,7 +9,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,10 +27,7 @@ public class ProjectQueryService {
     public Project getProjectById(Long id) {
         Optional<Project> result = projectRepository.findById(id);
 
-        if (!result.isPresent()) {
-            throw new ProjectNotFoundException();
-        }
-        return result.get();
+        return result.orElseThrow(ProjectNotFoundException::new);
     }
 
     public void saveProject(Project project) {
@@ -67,11 +63,6 @@ public class ProjectQueryService {
         projectRepository.save(project);
         return project;
     }
-
-    public Project findOneOrThrowException(Long id) {
-        return projectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
     public List<Project> getProjectByEmployeeId(Long id) {
         return projectRepository.findProjectsById(id);
     }

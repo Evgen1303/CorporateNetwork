@@ -1,6 +1,7 @@
 package co.norse.hr.mainservice.dto;
 
 public class EmployeeDto {
+
     private Long companyId;
     private String firstName;
     private String lastName;
@@ -11,6 +12,7 @@ public class EmployeeDto {
     private String position;
     private String description;
     private Long officeId;
+
 
     public Long getCompanyId() {
         return companyId;
@@ -91,4 +93,5 @@ public class EmployeeDto {
     public void setOfficeId(Long officeId) {
         this.officeId = officeId;
     }
+
 }
