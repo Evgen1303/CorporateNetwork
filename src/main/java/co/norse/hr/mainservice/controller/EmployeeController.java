@@ -72,7 +72,7 @@ public final class EmployeeController {
     }
 
     @GetMapping("/filter")
-    public Page<Employee> getPageTest(@PageableDefault(size = DEFAULT_PAGE_SIZE)
+    public Page<Employee> getFilteredEmployees(@PageableDefault(size = DEFAULT_PAGE_SIZE)
                                       @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
                                               Pageable pageable, @RequestBody FilterDto filterDto) {
         return employeeQueryService.getAllEmployeebyFields(pageable, filterDto);

@@ -1,7 +1,9 @@
 package co.norse.hr.mainservice.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 @Entity
 public class Project {
@@ -12,6 +14,10 @@ public class Project {
     private Long id;
     private String name;
     private String description;
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY,
+            mappedBy = "project")
+    private Set<EmployeeProject> employeeProjects = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
@@ -61,4 +67,5 @@ public class Project {
     public void setDescription(String description) {
         this.description = description;
     }
+
 }
