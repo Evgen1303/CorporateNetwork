@@ -5,7 +5,7 @@ public class EmployeeDto {
     private Long companyId;
     private String firstName;
     private String lastName;
-    private int birthday;
+    private Long birthday;
     private String email;
     private String phone;
     private String roomNumber;
@@ -38,11 +38,11 @@ public class EmployeeDto {
         this.lastName = lastName;
     }
 
-    public int getBirthday() {
+    public Long getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(int birthday) {
+    public void setBirthday(Long birthday) {
         this.birthday = birthday;
     }
 

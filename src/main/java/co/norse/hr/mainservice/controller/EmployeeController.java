@@ -1,7 +1,6 @@
 package co.norse.hr.mainservice.controller;
 
 import co.norse.hr.mainservice.dto.EmployeeDto;
-import co.norse.hr.mainservice.dto.FilterDto;
 import co.norse.hr.mainservice.entity.Employee;
 import co.norse.hr.mainservice.service.employee.EmployeeConverterService;
 import co.norse.hr.mainservice.service.employee.EmployeeQueryService;
@@ -74,9 +73,19 @@ public final class EmployeeController {
     @GetMapping("/filter")
     public Page<Employee> getFilteredEmployees(@PageableDefault(size = DEFAULT_PAGE_SIZE)
                                       @SortDefault.SortDefaults({@SortDefault(sort = DEFAULT_SORT_FIELD)})
-                                              Pageable pageable, @RequestBody FilterDto filterDto) {
-        return employeeQueryService.getAllEmployeebyFields(pageable, filterDto);
+                                                       Pageable pageable,
+                                               @RequestParam(value = "officeId", required = false) Long officeId,
+                                               @RequestParam(value = "position", required = false) String position,
+                                               @RequestParam(value = "companyId", required = false) Long companyId,
+                                               @RequestParam(value = "birthday", required = false) Long birthday,
+                                               @RequestParam(value = "roomNumber", required = false) String roomNumber,
+                                               @RequestParam(value = "projects", required = false) List<String> projects,
+                                               @RequestParam(value = "skills", required = false) List<String> skills) {
+
+        return employeeQueryService.getAllEmployeebyFields(pageable, officeId, position, companyId, birthday, roomNumber, projects, skills);
+
     }
+
 
     @GetMapping("/find/{name}")
     public List<Employee> getEmployeeByNameOrLastname(@PathVariable String name) {
